@@ -17,6 +17,9 @@ public class Navigation_activity extends AppCompatActivity {
         if(getSupportActionBar()!=null){
             getSupportActionBar().hide();
 
+
+
+
             
         }
     }

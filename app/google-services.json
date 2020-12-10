@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "201975435000",
+    "project_id": "smplmedicalapp-408ea",
+    "storage_bucket": "smplmedicalapp-408ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201975435000:android:6eed23058f87d784ba350d",
+        "android_client_info": {
+          "package_name": "com.example.smplmedicalapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "201975435000-fepvjp06ngkn1eo84dhus9i3k1uqkbl2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOP8qV1irNAYztDfonArUupo8L7cAb4Xw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "201975435000-fepvjp06ngkn1eo84dhus9i3k1uqkbl2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
