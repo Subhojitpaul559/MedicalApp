@@ -206,6 +206,15 @@
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"/>
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="false"
+                        app:boxStrokeWidth="0dp"
+                        app:boxStrokeWidthFocused="0dp"
+                        app:passwordToggleEnabled="true">
+
+
                     <EditText
                         android:id="@+id/pass"
                         android:layout_width="match_parent"
@@ -217,8 +226,11 @@
                         android:hint="Set Password"
                         android:inputType="number"
                         android:gravity="center_vertical"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"/>
+                        android:paddingVertical="0dp"
+                        android:paddingHorizontal="20dp"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
 
                 </LinearLayout>
 
@@ -259,7 +271,8 @@
                 android:text="Sign in"
                 android:textColor="@color/purple_200"
                 android:gravity="center_horizontal"
-                android:textSize="20sp"/>
+                android:textSize="18sp"
+                android:layout_marginBottom="20dp"/>
 
 
         </LinearLayout>

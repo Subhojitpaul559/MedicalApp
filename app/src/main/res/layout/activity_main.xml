@@ -8,15 +8,23 @@
     tools:context=".MainActivity">
 
    <Button
-       android:id="@+id/Btn_logout"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
-       android:text="Logout"
-       android:layout_gravity="bottom|right"
-       android:padding="5dp"
-       android:layout_margin="10dp"
+       android:layout_gravity="top|right"
+       android:layout_margin="14dp"
        android:onClick="logout"
+       android:padding="5dp"
+       android:text="Logout"
        tools:ignore="MissingConstraints" />
+
+
+
+
+   <com.google.android.material.bottomnavigation.BottomNavigationView
+       android:layout_width="match_parent"
+       android:layout_height="55dp"
+       android:layout_gravity="bottom"
+       app:menu="@menu/select_icon"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
