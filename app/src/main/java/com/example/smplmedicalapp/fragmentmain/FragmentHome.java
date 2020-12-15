@@ -3,12 +3,24 @@ package com.example.smplmedicalapp.fragmentmain;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.smplmedicalapp.ItemAdapter;
+import com.example.smplmedicalapp.ItemData;
 import com.example.smplmedicalapp.R;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,7 +28,10 @@ import com.example.smplmedicalapp.R;
  * create an instance of this fragment.
  */
 public class FragmentHome extends Fragment {
-
+    private RecyclerView recyclerView;
+    private View view;
+    ItemAdapter itemAdapter;
+    DatabaseReference databaseReference;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,12 +70,47 @@ public class FragmentHome extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+
+       view = inflater.inflate(R.layout.fragment_home, container, false);
+       recyclerView = view.findViewById(R.id.rclv1);
+       recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+       String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com"; //https://smplmedicalapp-408ea-default-rtdb.firebaseio.com
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Log.i(TAG, "onSuccess: "+user.getUid());
+        String curuser = user.getUid();
+       databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
+
+
+           FirebaseRecyclerOptions<ItemData> options =
+                   new FirebaseRecyclerOptions.
+                           Builder<ItemData>().setQuery(databaseReference, ItemData.class).
+                           build();
+           itemAdapter = new ItemAdapter(options);
+           recyclerView.setAdapter(itemAdapter);
+
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        itemAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        itemAdapter.stopListening();
     }
 }
