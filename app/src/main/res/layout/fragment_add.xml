@@ -7,16 +7,10 @@
     tools:context=".fragmentmain.FragmentAdd">
 
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_fragment"
-        android:textAlignment="center" />
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:layout_marginLeft="12dp"
+            android:layout_margin="10dp"
             android:text="@string/enter_item_name"
             android:textAllCaps="true"
             android:textColor="@color/blue"
@@ -41,7 +35,7 @@
             android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="5dp"
-            android:layout_marginLeft="12dp"
+            android:paddingHorizontal="10dp"
             android:background="@drawable/background_textfield"
             android:gravity="center_vertical"
             android:hint="@string/item_name"
@@ -56,8 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="12dp"
+            android:layout_margin="10dp"
             android:text="Add item description"
             android:layout_below="@id/name_value"
             android:textAllCaps="true"
@@ -67,10 +60,10 @@
 
             android:id="@+id/desc_value"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="50dp"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="5dp"
-            android:layout_marginLeft="12dp"
+            android:paddingHorizontal="10dp"
             android:background="@drawable/background_textfield"
             android:gravity="center_vertical"
             android:hint="@string/item_description"
@@ -85,7 +78,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|top"
-            android:layout_marginLeft="12dp"
+           android:layout_margin="10dp"
             android:text="Choose Image"
             android:layout_below="@+id/desc_value"
             android:textAllCaps="true"
@@ -96,30 +89,29 @@
             android:id="@+id/filename"
             android:layout_width="match_parent"
             android:textSize="20sp"
-            android:layout_marginHorizontal="5dp"
+            android:paddingHorizontal="10dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/choose_img"
             android:layout_marginTop="10dp"
-            android:hint="Image name will appear here"
-            />
+            android:hint="Image name will appear here" />
 
         <Button
             android:id="@+id/btn_additem"
-            android:layout_width="129dp"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/filename"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginBottom="50dp"
+            android:layout_margin="15dp"
+            android:padding="10dp"
             android:background="@drawable/custom_button"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
             android:layout_centerHorizontal="true"
             android:text="@string/add_item"
             android:textAllCaps="true"
-            android:textColor="#fff" />
+            android:textColor="@color/white" />
 
     </RelativeLayout>
-</ScrollView>
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>
