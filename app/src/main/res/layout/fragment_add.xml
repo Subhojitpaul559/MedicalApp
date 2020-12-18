@@ -9,24 +9,16 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
+        >
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="50sp">
 
 
-        <TextView
-            android:id="@+id/additem_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|top"
-            android:layout_margin="10dp"
-            android:text="@string/enter_item_name"
-            android:textAllCaps="true"
-            android:textColor="@color/blue"
-            android:textSize="20sp" />
 
         <EditText
 
@@ -36,26 +28,16 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="5dp"
             android:paddingHorizontal="10dp"
+            android:layout_below="@+id/itemimageview"
             android:background="@drawable/background_textfield"
             android:gravity="center_vertical"
             android:hint="@string/item_name"
             android:inputType="text"
-            android:layout_below="@+id/additem_name"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textColor="@color/cardview_dark_background"
             android:textSize="18sp" />
-        <TextView
-            android:id="@+id/additem_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|top"
-            android:layout_margin="10dp"
-            android:text="Add item description"
-            android:layout_below="@id/name_value"
-            android:textAllCaps="true"
-            android:textColor="@color/blue"
-            android:textSize="20sp" />
+
         <EditText
 
             android:id="@+id/desc_value"
@@ -68,7 +50,7 @@
             android:gravity="center_vertical"
             android:hint="@string/item_description"
             android:inputType="text"
-            android:layout_below="@+id/additem_desc"
+            android:layout_below="@+id/name_value"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textColor="@color/cardview_dark_background"
@@ -83,7 +65,7 @@
             android:layout_below="@+id/desc_value"
             android:textAllCaps="true"
             android:textColor="@color/blue"
-            android:textSize="20sp" />
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/filename"
@@ -91,21 +73,99 @@
             android:textSize="20sp"
             android:paddingHorizontal="10dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/choose_img"
-            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/choose_img"
+            android:layout_below="@+id/desc_value"
             android:hint="Image name will appear here" />
 
+        <ImageView
+            android:id="@+id/itemimageview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_margin="15sp"
+            android:layout_centerHorizontal="true"
+            tools:src="@tools:sample/avatars" />
+        <EditText
+
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/background_textfield"
+            android:gravity="center_vertical"
+            android:hint="Enter Price"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:textColor="@color/cardview_dark_background"
+            android:layout_below="@+id/choose_img"
+            android:textSize="18sp" />
+        <EditText
+
+            android:id="@+id/discount"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/background_textfield"
+            android:gravity="center_vertical"
+            android:hint="Add Discount"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_below="@+id/price"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="18sp" />
+        <EditText
+
+            android:id="@+id/qty"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/background_textfield"
+            android:gravity="center_vertical"
+            android:hint="Enter Quantity"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_below="@+id/discount"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="18sp" />
+        <EditText
+
+            android:id="@+id/sizeml"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="5dp"
+            android:paddingHorizontal="10dp"
+            android:background="@drawable/background_textfield"
+            android:gravity="center_vertical"
+            android:hint="Enter mg/mL"
+            android:inputType="text"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_below="@+id/qty"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="18sp" />
         <Button
             android:id="@+id/btn_additem"
             android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/filename"
-            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_margin="15dp"
-            android:padding="10dp"
-            android:background="@drawable/custom_button"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
             android:layout_centerHorizontal="true"
+            android:background="@drawable/custom_button"
+            android:layout_below="@+id/sizeml"
+            android:padding="10dp"
             android:text="@string/add_item"
             android:textAllCaps="true"
             android:textColor="@color/white" />
@@ -113,5 +173,7 @@
     </RelativeLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+
 
 </FrameLayout>

@@ -2,8 +2,9 @@ package com.example.smplmedicalapp.fragmentmain;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,7 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.example.smplmedicalapp.ItemAdapter;
 import com.example.smplmedicalapp.ItemData;
@@ -19,24 +20,31 @@ import com.example.smplmedicalapp.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
-import java.io.StringReader;
+import org.w3c.dom.Text;
 
 import static android.content.ContentValues.TAG;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link FragmentHome#newInstance} factory method to
+ * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FragmentHome extends Fragment {
+public class SearchFragment extends Fragment {
+
+    private TextView textView;
+
     private RecyclerView recyclerView;
-    private View view;
-    private SearchView itemsearchView;
     ItemAdapter itemAdapter;
     DatabaseReference databaseReference;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -46,7 +54,7 @@ public class FragmentHome extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public FragmentHome() {
+    public SearchFragment() {
         // Required empty public constructor
     }
 
@@ -56,11 +64,11 @@ public class FragmentHome extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentHome.
+     * @return A new instance of fragment SearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FragmentHome newInstance(String param1, String param2) {
-        FragmentHome fragment = new FragmentHome();
+    public static SearchFragment newInstance(String param1, String param2) {
+        SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -75,65 +83,60 @@ public class FragmentHome extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        textView = view.findViewById(R.id.tv1);
+        String val = getArguments().getString("key");
+        Log.i(TAG, "searchactivity: " + val);
+        //textView.setText(val);
+        recyclerView = view.findViewById(R.id.searchrclv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com"; //https://smplmedicalapp-408ea-default-rtdb.firebaseio.com
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        itemsearchView = view.findViewById(R.id.searchItem);
-        itemsearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        Log.i(TAG, "onSuccess: " + user.getUid());
+        String curuser = user.getUid();
+        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
+        Query query = databaseReference.orderByChild("name").startAt(val).endAt(val+"\uf8ff");
+
+        query.addValueEventListener(new ValueEventListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                Log.i(TAG, "onQueryTextSubmit: "+query);
-                Bundle bundleString = new Bundle();
-                bundleString.putString("key", query);
-                SearchFragment searchFragment = new SearchFragment();
-                searchFragment.setArguments(bundleString);
-                FragmentManager manager = getFragmentManager();
-                manager.beginTransaction()
-                        .replace(R.id.frame_layout_01, searchFragment, searchFragment.getTag())
-                        .commit();
-                //return view;
-                return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
-       recyclerView = view.findViewById(R.id.rclv1);
-       recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-       String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com"; //https://smplmedicalapp-408ea-default-rtdb.firebaseio.com
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseRecyclerOptions<ItemData> options = new FirebaseRecyclerOptions
+                .Builder<ItemData>()
+                .setQuery(query, ItemData.class)
+                .build();
+        itemAdapter = new ItemAdapter(options);
+        recyclerView.setAdapter(itemAdapter);
 
-        Log.i(TAG, "onSuccess: "+user.getUid());
-        String curuser = user.getUid();
-       databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
+       /* if (searchItemName.indexOf(val) == 0) {
 
-
-           FirebaseRecyclerOptions<ItemData> options =
-                   new FirebaseRecyclerOptions.
-                           Builder<ItemData>().setQuery(databaseReference, ItemData.class).
-                           build();
-           itemAdapter = new ItemAdapter(options);
-           recyclerView.setAdapter(itemAdapter);
-
-
-        return view;
-    }
-
+            FirebaseRecyclerOptions<ItemData> options =
+                    new FirebaseRecyclerOptions.
+                            Builder<ItemData>().setQuery(databaseReference, ItemData.class).
+                            build();
+            itemAdapter = new ItemAdapter(options);
+            recyclerView.setAdapter(itemAdapter);
+        }*/
+            return view;
+        }
     @Override
     public void onStart() {
         super.onStart();
-
         itemAdapter.startListening();
     }
 

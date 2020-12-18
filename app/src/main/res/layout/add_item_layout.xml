@@ -54,7 +54,9 @@
                         android:layout_toRightOf="@+id/item_img"
                         android:text="@string/item_name"
                         android:textColor="@color/black"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+
+                        />
 
                     <TextView
 
@@ -115,12 +117,14 @@
                         android:layout_marginLeft="14dp">
 
                         <TextView
+                            android:id="@+id/item_qty"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Qty:1"
                             android:layout_weight="1"/>
 
                         <TextView
+                            android:id="@+id/item_size"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Size:50gm"
@@ -137,7 +141,7 @@
 
                         android:id="@+id/btn_remove"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="40dp"
                         android:layout_below="@+id/price"
                         android:layout_marginStart="14dp"
                         android:layout_marginLeft="-99dp"
@@ -145,7 +149,7 @@
                         android:layout_toEndOf="@+id/item_img"
                         android:layout_toRightOf="@+id/item_name"
                         android:text="@string/remove"
-                        android:textSize="10sp" />
+                        android:textSize="10sp"/>
 
                 </LinearLayout>
 

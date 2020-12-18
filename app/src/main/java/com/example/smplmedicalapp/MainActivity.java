@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-
         newFragment(new FragmentHome());
         BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);

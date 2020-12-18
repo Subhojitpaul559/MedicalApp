@@ -58,10 +58,11 @@ public class FragmentAdd extends Fragment {
 
     private Button addbtn;
     private TextView chooseimg, imgname;
-    private EditText itemname, itemdesc;
+    private EditText itemname, itemdesc, itemprice, itemsize,itemdiscount, itemqty;
     private Uri imgpath;
+    private ImageView imageView;
     File imgfile;
-    private final int PICK_IMAGE_REQUEST = 71;
+    private final int PICK_IMAGE = 100;
 
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -120,6 +121,13 @@ public class FragmentAdd extends Fragment {
         imgname = view.findViewById(R.id.filename);
         itemdesc = view.findViewById(R.id.desc_value);
 
+        itemprice = view.findViewById(R.id.price);
+        itemdiscount = view.findViewById(R.id.discount);
+        itemqty = view.findViewById(R.id.qty);
+        itemsize = view.findViewById(R.id.sizeml);
+
+        imageView = view.findViewById(R.id.itemimageview);
+
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
@@ -165,6 +173,15 @@ public class FragmentAdd extends Fragment {
                     databaseReference.child(curuser).child(random).child("image").setValue(filestring);
                     databaseReference.child(curuser).child(random).child("name").setValue(itemname.getText().toString());
                     databaseReference.child(curuser).child(random).child("description").setValue(itemdesc.getText().toString());
+                    databaseReference.child(curuser).child(random).child("price").setValue(itemprice.getText().toString());
+
+                    int db_or_price = Integer.parseInt(itemprice.getText().toString());
+                    int db_dis = Integer.parseInt(itemdiscount.getText().toString());
+                    int db_dis_price =  (db_or_price/100)*(100-db_dis);
+                    databaseReference.child(curuser).child(random).child("dprice").setValue(String.valueOf(db_dis_price));
+                    databaseReference.child(curuser).child(random).child("discount").setValue(itemdiscount.getText().toString());
+                    databaseReference.child(curuser).child(random).child("qty").setValue(itemqty.getText().toString());
+                    databaseReference.child(curuser).child(random).child("size").setValue(itemsize.getText().toString());
 
                     Toast.makeText(getView().getContext(), "Uploaded !!", Toast.LENGTH_SHORT);
                 }
@@ -202,10 +219,11 @@ public class FragmentAdd extends Fragment {
 
     private void ChooseImg() {
 
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "choose item image... "), PICK_IMAGE_REQUEST);
+        Intent intent = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        //intent.setType("image/*");
+       // intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "choose item image... "), PICK_IMAGE);
 
     }
 
@@ -214,7 +232,7 @@ public class FragmentAdd extends Fragment {
 
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK
         && data != null && data.getData() != null){
             imgpath = data.getData();
              imgfile = new File(""+Uri.parse(String.valueOf(imgpath)));
@@ -223,6 +241,7 @@ public class FragmentAdd extends Fragment {
              int pos = imgfile.getName().lastIndexOf("%2F");
              filestring = filestring.substring(pos+3);
             imgname.setText(filestring);
+            imageView.setImageURI(imgpath);
            // imgname.setText(data.getDataString());
             //Bitmap bitmap = MediaStore.Image.Media.getBitmap(get)
            // displayitem.setImageBitmap(BitmapFactory.decodeFile(imgpath.toString()));

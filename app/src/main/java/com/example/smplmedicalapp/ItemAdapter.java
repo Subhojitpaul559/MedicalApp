@@ -43,8 +43,14 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position,
                                     @NonNull ItemData model) {
-        holder.textView1.setText(model.getName());
-        holder.textView2.setText(model.getDescription());
+        holder.name.setText(model.getName());
+        holder.desc.setText(model.getDescription());
+        holder.org_price.setText(model.getPrice());
+        holder.discountPrice.setText(model.getDprice());
+        holder.qty.setText(model.getQty());
+        holder.discount.setText(model.getDiscount());
+        holder.size.setText(model.getSize());
+
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage.getReferenceFromUrl("gs://smplmedicalapp-408ea.appspot.com/Images/").child(model.getImage());
@@ -63,13 +69,7 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
                 holder.imageView.setImageBitmap(bitmap);
             }
         });
-
-
-
-
-
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -83,15 +83,21 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView imageView;
-        public TextView textView1, textView2;
+        public TextView name, desc, price, qty, discount, size, org_price, discountPrice ;
         public Button button;
         public RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView){
             super(itemView);
             this.imageView = itemView.findViewById(R.id.item_img);
-            this.textView1 = itemView.findViewById(R.id.item_name);
-            this.textView2 = itemView.findViewById(R.id.item_desc);
+            this.name = itemView.findViewById(R.id.item_name);
+            this.desc = itemView.findViewById(R.id.item_desc);
+           // this.price = itemView.findViewById(R.id.item_price);
+            this.org_price = itemView.findViewById(R.id.item_original_price);
+            this.discountPrice = itemView.findViewById(R.id.item_price);
+            this.discount = itemView.findViewById(R.id.item_discount);
+            this.qty = itemView.findViewById(R.id.item_qty);
+            this.size = itemView.findViewById(R.id.item_size);
             this.button = itemView.findViewById(R.id.btn_remove);
             relativeLayout = itemView.findViewById(R.id.item_relativeLayout);
         }
