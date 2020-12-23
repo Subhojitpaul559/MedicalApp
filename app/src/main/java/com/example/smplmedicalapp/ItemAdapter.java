@@ -45,11 +45,11 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
                                     @NonNull ItemData model) {
         holder.name.setText(model.getName());
         holder.desc.setText(model.getDescription());
-        holder.org_price.setText(model.getPrice());
-        holder.discountPrice.setText(model.getDprice());
-        holder.qty.setText(model.getQty());
-        holder.discount.setText(model.getDiscount());
-        holder.size.setText(model.getSize());
+        holder.org_price.setText("₹"+model.getPrice());
+        holder.discountPrice.setText("₹"+model.getDprice());
+        holder.qty.setText("Qty :"+ model.getQty());
+        holder.discount.setText(model.getDiscount()+"%off");
+        holder.size.setText("Size :"+ model.getSize());
 
 
         FirebaseStorage storage = FirebaseStorage.getInstance();

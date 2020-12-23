@@ -97,7 +97,8 @@ public class FragmentHome extends Fragment {
                 searchFragment.setArguments(bundleString);
                 FragmentManager manager = getFragmentManager();
                 manager.beginTransaction()
-                        .replace(R.id.frame_layout_01, searchFragment, searchFragment.getTag())
+
+                        .replace(R.id.HomeActivity, searchFragment, searchFragment.getTag())
                         .commit();
                 //return view;
                 return false;

@@ -13,6 +13,7 @@ import android.view.View;
 
 import com.example.smplmedicalapp.fragmentmain.FragmentAdd;
 import com.example.smplmedicalapp.fragmentmain.FragmentHome;
+import com.example.smplmedicalapp.fragmentmain.Profile_Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -36,16 +37,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
     }
 
-    public void logout(View view){
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getApplicationContext(), ClientLogin.class));
-        finish();
-    }
-
     public  boolean newFragment(Fragment fragment){
 
         if(fragment!=null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_01, fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.HomeActivity, fragment).commit();
             return true;
 
         }
@@ -61,6 +56,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
             case R.id.add_item:
                 fragment = new FragmentAdd();
+                break;
+            case R.id.profile:
+                fragment = new Profile_Fragment();
                 break;
         }
         return newFragment(fragment);

@@ -20,4 +20,6 @@
     <string name="item_name">Item Name</string>
     <string name="item_description">Item description</string>
     <string name="add_item">Add Item</string>
+    <string name="name">name</string>
+    <string name="security_login"><![CDATA[Security & Login]]></string>
 </resources>

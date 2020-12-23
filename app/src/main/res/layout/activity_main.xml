@@ -9,24 +9,6 @@
     tools:context=".MainActivity">
 
 
-   <FrameLayout
-       android:id="@+id/frame_layout_01"
-       android:layout_width="match_parent"
-       android:layout_height="567dp"
-       android:layout_marginTop="100sp">
-
-   </FrameLayout>
-
-   <Button
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_gravity="top|end"
-       android:layout_margin="14dp"
-       android:onClick="logout"
-       android:padding="5dp"
-       android:text="@string/logout"
-       tools:ignore="MissingConstraints" />
-
    <com.google.android.material.bottomnavigation.BottomNavigationView
        android:layout_width="match_parent"
        android:layout_height="55dp"

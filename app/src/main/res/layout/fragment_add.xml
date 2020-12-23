@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,9 +9,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="50dp"
-        >
+        android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -75,7 +73,10 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/choose_img"
             android:layout_below="@+id/desc_value"
-            android:hint="Image name will appear here" />
+            android:layout_marginRight="10dp"
+            android:background="@drawable/background_textfield"
+            android:padding="5dp"
+            android:hint="Image name" />
 
         <ImageView
             android:id="@+id/itemimageview"
@@ -161,7 +162,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="65dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/custom_button"
             android:layout_below="@+id/sizeml"
@@ -176,4 +177,4 @@
 
 
 
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
