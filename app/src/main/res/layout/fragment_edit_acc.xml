@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Identity"
+                android:text="Edit Details"
                 android:background="@color/white"
                 android:gravity="center"
                 android:paddingTop="30dp"
@@ -67,7 +67,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/organisation_name"
+                        android:id="@+id/Uorganisation_name"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -83,7 +83,7 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/person_name"
+                        android:id="@+id/Uperson_name"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="5dp"
@@ -121,7 +121,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/client_phn_no"
+                        android:id="@+id/Uclient_phn_no"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginStart="2dp"
@@ -136,7 +136,7 @@
 
                 <EditText
 
-                    android:id="@+id/client_email"
+                    android:id="@+id/Uclient_email"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="5dp"
@@ -154,7 +154,7 @@
 
 
                 <EditText
-                    android:id="@+id/client_address"
+                    android:id="@+id/Uclient_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginStart="5dp"
@@ -193,7 +193,7 @@
                         android:textStyle="bold" />
 
                     <EditText
-                        android:id="@+id/gst_no"
+                        android:id="@+id/Ugst_no"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
@@ -201,35 +201,12 @@
                         android:background="@drawable/background_textfield"
                         android:textSize="18sp"
                         android:hint="GST No"
-                        android:inputType="text"
+                        android:inputType="number"
                         android:gravity="center_vertical"
                         android:paddingStart="20dp"
                         android:paddingEnd="20dp"/>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:hintEnabled="false"
-                        app:boxStrokeWidth="0dp"
-                        app:boxStrokeWidthFocused="0dp"
-                        app:passwordToggleEnabled="true">
 
-
-                    <EditText
-                        android:id="@+id/pass"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginStart="2dp"
-                        android:background="@drawable/background_textfield"
-                        android:textSize="18sp"
-                        android:hint="Set Password"
-                        android:inputType="number"
-                        android:gravity="center_vertical"
-                        android:paddingVertical="0dp"
-                        android:paddingHorizontal="20dp"/>
-
-                    </com.google.android.material.textfield.TextInputLayout>
 
 
                 </LinearLayout>
@@ -242,7 +219,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp">
                 <Button
-                    android:id="@+id/btn_submit"
+                    android:id="@+id/btn_update"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -251,7 +228,7 @@
                     android:paddingStart="5dp"
                     android:layout_centerInParent="true"
                     android:paddingEnd="5dp"
-                    android:text="proceed"
+                    android:text="Update Details"
                     android:textAllCaps="false"
                     android:textColor="#fff" />
 

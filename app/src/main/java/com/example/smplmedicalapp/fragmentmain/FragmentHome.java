@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
 
 import com.example.smplmedicalapp.ItemAdapter;
@@ -100,7 +101,6 @@ public class FragmentHome extends Fragment {
 
                         .replace(R.id.HomeActivity, searchFragment, searchFragment.getTag())
                         .commit();
-                //return view;
                 return false;
             }
 
@@ -130,6 +130,7 @@ public class FragmentHome extends Fragment {
 
         return view;
     }
+
 
     @Override
     public void onStart() {

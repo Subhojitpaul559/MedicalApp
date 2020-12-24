@@ -11,6 +11,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.provider.MediaStore;
 import android.util.Log;
@@ -148,57 +149,72 @@ public class FragmentAdd extends Fragment {
     }
 
     private void AddItem() {
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
-        if(imgpath !=null){
-            final ProgressDialog progressDialog
-                    = new ProgressDialog(getView().getContext());
-            progressDialog.setTitle("Uploading...");
-            progressDialog.show();
 
-            StorageReference ref = storageReference
-                    .child("Images/"+ ""+filestring);
-            ref.putFile(imgpath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    progressDialog.dismiss();
-                    //String itemID = databaseReference.push().getKey();
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (itemname.getText().toString().matches("") || itemdesc.getText().toString().matches("") ||
+                itemprice.getText().toString().matches("") ||
+                itemdiscount.getText().toString().matches("") || itemqty.getText().toString().matches("")
+                || itemsize.getText().toString().matches("")) {
+            Toast.makeText(getActivity(), "Fill all fields !", Toast.LENGTH_SHORT).show();
+        } else {
+            storage = FirebaseStorage.getInstance();
+            storageReference = storage.getReference();
+            if (imgpath != null) {
+                final ProgressDialog progressDialog
+                        = new ProgressDialog(getView().getContext());
+                progressDialog.setTitle("Uploading...");
+                progressDialog.show();
 
-                    Log.i(TAG, "onSuccess: "+user.getUid());
-                    String curuser = user.getUid();
-                    databaseReference = FirebaseDatabase.getInstance().getReference("items");
-                    //String itemURL = storageReference.child("Images/").getDownloadUrl().toString();
-                    String random = GenerateRandomString.randomString(9);
-                    databaseReference.child(curuser).child(random).child("image").setValue(filestring);
-                    databaseReference.child(curuser).child(random).child("name").setValue(itemname.getText().toString());
-                    databaseReference.child(curuser).child(random).child("description").setValue(itemdesc.getText().toString());
-                    databaseReference.child(curuser).child(random).child("price").setValue(itemprice.getText().toString());
+                StorageReference ref = storageReference
+                        .child("Images/" + "" + filestring);
+                ref.putFile(imgpath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        //String itemID = databaseReference.push().getKey();
+                        int db_or_price = Integer.parseInt(itemprice.getText().toString());
+                        int db_dis = Integer.parseInt(itemdiscount.getText().toString());
+                        double db_dis_price = ((db_or_price) * (100 - db_dis))/100;
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    int db_or_price = Integer.parseInt(itemprice.getText().toString());
-                    int db_dis = Integer.parseInt(itemdiscount.getText().toString());
-                    int db_dis_price =  (db_or_price/100)*(100-db_dis);
-                    databaseReference.child(curuser).child(random).child("dprice").setValue(String.valueOf(db_dis_price));
-                    databaseReference.child(curuser).child(random).child("discount").setValue(itemdiscount.getText().toString());
-                    databaseReference.child(curuser).child(random).child("qty").setValue(itemqty.getText().toString());
-                    databaseReference.child(curuser).child(random).child("size").setValue(itemsize.getText().toString());
+                        Log.i(TAG, "onSuccess: " + user.getUid());
+                        String curuser = user.getUid();
+                        databaseReference = FirebaseDatabase.getInstance().getReference("items");
+                        //String itemURL = storageReference.child("Images/").getDownloadUrl().toString();
+                        String random = GenerateRandomString.randomString(9);
+                        databaseReference.child(curuser).child(random).child("image").setValue(filestring);
+                        databaseReference.child(curuser).child(random).child("name").setValue(itemname.getText().toString());
+                        databaseReference.child(curuser).child(random).child("description").setValue(itemdesc.getText().toString());
+                        databaseReference.child(curuser).child(random).child("price").setValue(itemprice.getText().toString());
 
-                    Toast.makeText(getView().getContext(), "Uploaded !!", Toast.LENGTH_SHORT);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Toast.makeText(getView().getContext(), "Failed !!", Toast.LENGTH_SHORT);
-                }
-            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                    double progress = (100.0*snapshot.getBytesTransferred()/snapshot
-                            .getTotalByteCount());
-                    progressDialog.setMessage("Uploaded "+(int)progress+"%");
-                }
-            });
+
+                        databaseReference.child(curuser).child(random).child("dprice").setValue(String.valueOf(db_dis_price));
+                        databaseReference.child(curuser).child(random).child("discount").setValue(itemdiscount.getText().toString());
+                        databaseReference.child(curuser).child(random).child("qty").setValue(itemqty.getText().toString());
+                        databaseReference.child(curuser).child(random).child("size").setValue(itemsize.getText().toString());
+
+                        Toast.makeText(getView().getContext(), "Uploaded !!", Toast.LENGTH_SHORT).show();
+
+                        FragmentHome fragmentHome = new FragmentHome();
+                        FragmentManager manager = getFragmentManager();
+                        manager.beginTransaction()
+
+                                .replace(R.id.HomeActivity, fragmentHome, fragmentHome.getTag())
+                                .commit();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getView().getContext(), "Failed !!", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        double progress = (100.0 * snapshot.getBytesTransferred() / snapshot
+                                .getTotalByteCount());
+                        progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                    }
+                });
 
            /* storageReference.child("Images/").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -210,12 +226,10 @@ public class FragmentAdd extends Fragment {
                 }
             });*/
 
+            }
         }
     }
 
-    private void addtoDB(){
-
-    }
 
     private void ChooseImg() {
 

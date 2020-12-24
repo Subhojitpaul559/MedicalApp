@@ -243,8 +243,7 @@
                         android:paddingHorizontal="20dp"
                         android:textSize="15sp"
                         android:text="Edit Account DETAILS"
-                        android:textColor="@color/white"
-                        android:onClick="editAccount"/>
+                        android:textColor="@color/white"/>
 
                 </LinearLayout>
 
@@ -315,6 +314,7 @@
                             android:src="@drawable/ic_baseline_keyboard_24"/>
 
                         <TextView
+                            android:id="@+id/gotoresetpasswword"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Reset password"

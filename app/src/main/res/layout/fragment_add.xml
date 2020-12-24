@@ -26,7 +26,7 @@
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="5dp"
             android:paddingHorizontal="10dp"
-            android:layout_below="@+id/itemimageview"
+            android:layout_below="@+id/filename"
             android:background="@drawable/background_textfield"
             android:gravity="center_vertical"
             android:hint="@string/item_name"
@@ -60,10 +60,11 @@
             android:layout_gravity="center|top"
            android:layout_margin="10dp"
             android:text="Choose Image"
-            android:layout_below="@+id/desc_value"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/itemimageview"
             android:textAllCaps="true"
             android:textColor="@color/blue"
-            android:textSize="12sp" />
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/filename"
@@ -71,12 +72,11 @@
             android:textSize="20sp"
             android:paddingHorizontal="10dp"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/choose_img"
-            android:layout_below="@+id/desc_value"
+            android:layout_below="@+id/choose_img"
             android:layout_marginRight="10dp"
             android:background="@drawable/background_textfield"
-            android:padding="5dp"
-            android:hint="Image name" />
+            android:layout_centerHorizontal="true"
+            android:padding="5dp" />
 
         <ImageView
             android:id="@+id/itemimageview"
@@ -97,11 +97,11 @@
             android:background="@drawable/background_textfield"
             android:gravity="center_vertical"
             android:hint="Enter Price"
-            android:inputType="text"
+            android:inputType="number"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textColor="@color/cardview_dark_background"
-            android:layout_below="@+id/choose_img"
+            android:layout_below="@+id/desc_value"
             android:textSize="18sp" />
         <EditText
 
@@ -114,7 +114,7 @@
             android:background="@drawable/background_textfield"
             android:gravity="center_vertical"
             android:hint="Add Discount"
-            android:inputType="text"
+            android:inputType="number"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:layout_below="@+id/price"
@@ -131,7 +131,7 @@
             android:background="@drawable/background_textfield"
             android:gravity="center_vertical"
             android:hint="Enter Quantity"
-            android:inputType="text"
+            android:inputType="number"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:layout_below="@+id/discount"

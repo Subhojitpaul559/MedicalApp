@@ -9,14 +9,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.smplmedicalapp.fragmentmain.FragmentHome;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.FirebaseRecyclerOptions.Builder;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +54,17 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
         holder.qty.setText("Qty :"+ model.getQty());
         holder.discount.setText(model.getDiscount()+"%off");
         holder.size.setText("Size :"+ model.getSize());
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase.getInstance().getReference().child("items")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child(getRef(position).getKey())
+                        .removeValue();
+                Toast.makeText( v.getContext(), "Deleted !", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
