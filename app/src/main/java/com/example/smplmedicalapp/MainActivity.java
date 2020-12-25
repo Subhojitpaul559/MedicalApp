@@ -16,6 +16,7 @@ import com.example.smplmedicalapp.fragmentmain.FragmentHome;
 import com.example.smplmedicalapp.fragmentmain.Profile_Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -24,17 +25,15 @@ import java.sql.DatabaseMetaData;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+           newFragment(new FragmentHome());
+            BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
+            bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
 
-
-        newFragment(new FragmentHome());
-        BottomNavigationView bottomNavigationView = findViewById(R.id.navigation);
-        bottomNavigationView.setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) this);
     }
 
     public  boolean newFragment(Fragment fragment){
@@ -62,5 +61,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
         return newFragment(fragment);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 }

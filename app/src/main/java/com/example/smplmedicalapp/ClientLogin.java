@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import static android.text.TextUtils.*;
 
@@ -31,6 +32,7 @@ public class ClientLogin extends AppCompatActivity {
     private Button mBtn_login;
     private FirebaseAuth mAuth;
     private ProgressBar progressbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,8 @@ public class ClientLogin extends AppCompatActivity {
         forgotten_pass=findViewById(R.id.reset_pass);
 
         mAuth = FirebaseAuth.getInstance();
+
+
         progressbar=findViewById(R.id.progressbar);
         Forgot_text_pass=findViewById(R.id.reset_pass);
 

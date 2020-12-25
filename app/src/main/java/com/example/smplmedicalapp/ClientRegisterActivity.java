@@ -53,11 +53,9 @@ public class ClientRegisterActivity extends AppCompatActivity {
         progressbar=findViewById(R.id.progress);
         Signin=findViewById(R.id.signin_pg);
 
-        if(mAuth.getCurrentUser() !=null){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
 
-        }
+
+
 
         mBtn_submit.setOnClickListener(new View.OnClickListener() {
             @Override

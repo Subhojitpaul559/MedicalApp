@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.example.smplmedicalapp.ItemAdapter;
@@ -38,6 +39,7 @@ public class FragmentHome extends Fragment {
     private SearchView itemsearchView;
     ItemAdapter itemAdapter;
     DatabaseReference databaseReference;
+   // ProgressBar pgsBar ;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -86,6 +88,9 @@ public class FragmentHome extends Fragment {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
+       // pgsBar = view.findViewById(R.id.pBar);
+        //pgsBar.setVisibility(view.GONE);
+
         itemsearchView = view.findViewById(R.id.searchItem);
         itemsearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -115,7 +120,7 @@ public class FragmentHome extends Fragment {
        String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com"; //https://smplmedicalapp-408ea-default-rtdb.firebaseio.com
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        Log.i(TAG, "onSuccess: "+user.getUid());
+       // Log.i(TAG, "onSuccess: "+user.getUid());
         String curuser = user.getUid();
        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
 
@@ -126,6 +131,7 @@ public class FragmentHome extends Fragment {
                            build();
            itemAdapter = new ItemAdapter(options);
            recyclerView.setAdapter(itemAdapter);
+        //pgsBar.setVisibility(View.GONE);
 
 
         return view;
@@ -135,7 +141,6 @@ public class FragmentHome extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
         itemAdapter.startListening();
     }
 
@@ -143,5 +148,6 @@ public class FragmentHome extends Fragment {
     public void onStop() {
         super.onStop();
         itemAdapter.stopListening();
+
     }
 }

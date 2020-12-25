@@ -21,7 +21,11 @@
             android:queryHint="Search Item"
             android:iconifiedByDefault="false"
             android:layout_alignParentTop="true"
-            android:outlineSpotShadowColor="@color/purple_200"/>
+            android:outlineSpotShadowColor="@color/purple_200">
+
+
+        </SearchView>
+
 
         <androidx.core.widget.NestedScrollView
 
