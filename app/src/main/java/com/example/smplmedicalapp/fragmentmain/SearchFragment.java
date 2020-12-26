@@ -102,7 +102,9 @@ public class SearchFragment extends Fragment {
         Log.i(TAG, "onSuccess: " + user.getUid());
         String curuser = user.getUid();
         databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
-        Query query = databaseReference.orderByChild("name").startAt(val).endAt(val+"\uf8ff");
+        Query query = databaseReference.orderByChild("name_lowercase").startAt(val.toLowerCase()).endAt(val.toLowerCase()+"\uf8ff");
+
+
 
         query.addValueEventListener(new ValueEventListener() {
             @Override

@@ -128,11 +128,20 @@ public class FragmentAdd extends Fragment {
         itemsize = view.findViewById(R.id.sizeml);
 
         imageView = view.findViewById(R.id.itemimageview);
+        imageView.setVisibility(view.VISIBLE);
+        imageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24);
 
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         chooseimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //ChooseImg();
+            }
+        });
+
+        imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ChooseImg();
@@ -147,6 +156,8 @@ public class FragmentAdd extends Fragment {
         });
         return view;
     }
+
+
 
     private void AddItem() {
 
@@ -182,6 +193,7 @@ public class FragmentAdd extends Fragment {
                         //String itemURL = storageReference.child("Images/").getDownloadUrl().toString();
                         String random = GenerateRandomString.randomString(9);
                         databaseReference.child(curuser).child(random).child("image").setValue(filestring);
+                        databaseReference.child(curuser).child(random).child("name_lowercase").setValue(itemname.getText().toString().toLowerCase());
                         databaseReference.child(curuser).child(random).child("name").setValue(itemname.getText().toString());
                         databaseReference.child(curuser).child(random).child("description").setValue(itemdesc.getText().toString());
                         databaseReference.child(curuser).child(random).child("price").setValue(itemprice.getText().toString());
