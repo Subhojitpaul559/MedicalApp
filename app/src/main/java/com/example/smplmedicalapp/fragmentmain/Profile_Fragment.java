@@ -92,7 +92,7 @@ public class Profile_Fragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-               Picasso.get().load(R.drawable.doc_img).into(Edit_pic);
+              // Picasso.get().load(R.drawable.ic_baseline_account_circle_24).into(Edit_pic);
             }
         });
 
