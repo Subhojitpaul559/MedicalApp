@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ import java.util.Objects;
 import static java.util.Objects.*;
 
 public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.ViewHolder> {
+
 
 
     /**
@@ -100,6 +102,7 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
         public ImageView imageView;
         public TextView name, desc, price, qty, discount, size, org_price, discountPrice ;
         public Button button;
+
         public RelativeLayout relativeLayout;
 
         public ViewHolder(View itemView){
@@ -107,7 +110,6 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
             this.imageView = itemView.findViewById(R.id.item_img);
             this.name = itemView.findViewById(R.id.item_name);
             this.desc = itemView.findViewById(R.id.item_desc);
-           // this.price = itemView.findViewById(R.id.item_price);
             this.org_price = itemView.findViewById(R.id.item_original_price);
             this.discountPrice = itemView.findViewById(R.id.item_price);
             this.discount = itemView.findViewById(R.id.item_discount);
@@ -118,4 +120,5 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
         }
 
     }
+
 }

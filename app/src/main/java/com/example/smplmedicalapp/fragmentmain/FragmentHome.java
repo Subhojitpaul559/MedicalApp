@@ -1,5 +1,6 @@
 package com.example.smplmedicalapp.fragmentmain;
 
+import android.app.MediaRouteButton;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.example.smplmedicalapp.ItemAdapter;
 import com.example.smplmedicalapp.ItemData;
 import com.example.smplmedicalapp.R;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +42,7 @@ public class FragmentHome extends Fragment {
     private SearchView itemsearchView;
     ItemAdapter itemAdapter;
     DatabaseReference databaseReference;
-   // ProgressBar pgsBar ;
+    public ProgressBar progressBar;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -74,6 +77,8 @@ public class FragmentHome extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -88,7 +93,8 @@ public class FragmentHome extends Fragment {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
-       // pgsBar = view.findViewById(R.id.pBar);
+        progressBar = view.findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.VISIBLE);
         //pgsBar.setVisibility(view.GONE);
 
         itemsearchView = view.findViewById(R.id.searchItem);
@@ -115,7 +121,10 @@ public class FragmentHome extends Fragment {
             }
         });
 
+
        recyclerView = view.findViewById(R.id.rclv1);
+       recyclerView.setVisibility(View.INVISIBLE);
+       progressBar.setVisibility(View.VISIBLE);
        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
        String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com"; //https://smplmedicalapp-408ea-default-rtdb.firebaseio.com
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -124,13 +133,28 @@ public class FragmentHome extends Fragment {
         String curuser = user.getUid();
        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
 
-
-           FirebaseRecyclerOptions<ItemData> options =
+       FirebaseRecyclerOptions<ItemData> options =
                    new FirebaseRecyclerOptions.
                            Builder<ItemData>().setQuery(databaseReference, ItemData.class).
                            build();
            itemAdapter = new ItemAdapter(options);
            recyclerView.setAdapter(itemAdapter);
+
+
+
+               new Handler().postDelayed(new Runnable() {
+
+                   @Override
+                   public void run() {
+                       recyclerView.setVisibility(View.VISIBLE);
+                       progressBar.setVisibility(View.GONE);
+                   }
+
+               }, 1500);
+
+               //progressBar.setVisibility(View.GONE);
+
+           //progressBar.setVisibility(View.GONE);
         //pgsBar.setVisibility(View.GONE);
 
 
@@ -148,6 +172,5 @@ public class FragmentHome extends Fragment {
     public void onStop() {
         super.onStop();
         itemAdapter.stopListening();
-
     }
 }

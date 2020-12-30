@@ -102,7 +102,6 @@ public class FragmentEditAcc extends Fragment {
                Profile_Fragment profile_fragment = new Profile_Fragment();
                FragmentManager manager = getFragmentManager();
                manager.beginTransaction()
-
                        .replace(R.id.HomeActivity, profile_fragment, profile_fragment.getTag())
                        .commit();
 

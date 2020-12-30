@@ -18,9 +18,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +64,7 @@ public class FragmentAdd extends Fragment {
     private EditText itemname, itemdesc, itemprice, itemsize,itemdiscount, itemqty;
     private Uri imgpath;
     private ImageView imageView;
+    private Spinner spinner;
     File imgfile;
     private final int PICK_IMAGE = 100;
 
@@ -121,26 +124,39 @@ public class FragmentAdd extends Fragment {
         itemname = view.findViewById(R.id.name_value);
         imgname = view.findViewById(R.id.filename);
         itemdesc = view.findViewById(R.id.desc_value);
-
+        spinner = view.findViewById(R.id.size_spinner);
         itemprice = view.findViewById(R.id.price);
         itemdiscount = view.findViewById(R.id.discount);
         itemqty = view.findViewById(R.id.qty);
         itemsize = view.findViewById(R.id.sizeml);
 
         imageView = view.findViewById(R.id.itemimageview);
-        imageView.setVisibility(view.VISIBLE);
         imageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24);
 
+        String[] size_list = new String[3];
+        size_list[0] = "Choose mg/mL";
+        size_list[1] = "mL";
+        size_list[2] = "mg";
+
+        ArrayAdapter<String > aa=new ArrayAdapter<String> (getContext(),
+                R.layout.support_simple_spinner_dropdown_item, size_list);
+
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+//                R.array.size_array, android.R.layout.simple_spinner_item);
+//        // Specify the layout to use when the list of choices appears
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        // Apply the adapter to the spinner
+        spinner.setAdapter(aa);
+        spinner.setSelection(0);
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         chooseimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //ChooseImg();
+                ChooseImg();
             }
         });
-
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,14 +173,12 @@ public class FragmentAdd extends Fragment {
         return view;
     }
 
-
-
     private void AddItem() {
 
         if (itemname.getText().toString().matches("") || itemdesc.getText().toString().matches("") ||
                 itemprice.getText().toString().matches("") ||
                 itemdiscount.getText().toString().matches("") || itemqty.getText().toString().matches("")
-                || itemsize.getText().toString().matches("")) {
+                || itemsize.getText().toString().matches("") || spinner.getSelectedItem().toString().matches("Choose mg/mL")) {
             Toast.makeText(getActivity(), "Fill all fields !", Toast.LENGTH_SHORT).show();
         } else {
             storage = FirebaseStorage.getInstance();
@@ -189,11 +203,11 @@ public class FragmentAdd extends Fragment {
 
                         Log.i(TAG, "onSuccess: " + user.getUid());
                         String curuser = user.getUid();
+                        String sizefinal =  itemsize.getText().toString().concat(spinner.getSelectedItem().toString());
                         databaseReference = FirebaseDatabase.getInstance().getReference("items");
                         //String itemURL = storageReference.child("Images/").getDownloadUrl().toString();
                         String random = GenerateRandomString.randomString(9);
                         databaseReference.child(curuser).child(random).child("image").setValue(filestring);
-                        databaseReference.child(curuser).child(random).child("name_lowercase").setValue(itemname.getText().toString().toLowerCase());
                         databaseReference.child(curuser).child(random).child("name").setValue(itemname.getText().toString());
                         databaseReference.child(curuser).child(random).child("description").setValue(itemdesc.getText().toString());
                         databaseReference.child(curuser).child(random).child("price").setValue(itemprice.getText().toString());
@@ -202,7 +216,7 @@ public class FragmentAdd extends Fragment {
                         databaseReference.child(curuser).child(random).child("dprice").setValue(String.valueOf(db_dis_price));
                         databaseReference.child(curuser).child(random).child("discount").setValue(itemdiscount.getText().toString());
                         databaseReference.child(curuser).child(random).child("qty").setValue(itemqty.getText().toString());
-                        databaseReference.child(curuser).child(random).child("size").setValue(itemsize.getText().toString());
+                        databaseReference.child(curuser).child(random).child("size").setValue(sizefinal);
 
                         Toast.makeText(getView().getContext(), "Uploaded !!", Toast.LENGTH_SHORT).show();
 

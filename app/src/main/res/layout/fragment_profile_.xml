@@ -7,7 +7,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragmentmain.Profile_Fragment">
 
+
+
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/profile_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
