@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">201975435000-fepvjp06ngkn1eo84dhus9i3k1uqkbl2.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">201975435000</string>
+    <string name="google_api_key" translatable="false">AIzaSyBOP8qV1irNAYztDfonArUupo8L7cAb4Xw</string>
+    <string name="google_app_id" translatable="false">1:201975435000:android:6eed23058f87d784ba350d</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBOP8qV1irNAYztDfonArUupo8L7cAb4Xw</string>
+    <string name="google_storage_bucket" translatable="false">smplmedicalapp-408ea.appspot.com</string>
+    <string name="project_id" translatable="false">smplmedicalapp-408ea</string>
+</resources>

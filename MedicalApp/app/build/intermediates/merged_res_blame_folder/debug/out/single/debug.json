@@ -1,0 +1,162 @@
+[
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_smpllogo.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-xxhdpi\\smpllogo.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_home_24.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_baseline_home_24.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_doc_img.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable-v24\\doc_img.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_add.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\fragment_add.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_local_shipping_24.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_baseline_local_shipping_24.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_visibility_off_24.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_baseline_visibility_off_24.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_med.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable-v24\\med.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_navigation_activity.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\activity_navigation_activity.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\menu_select_icon.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\menu\\select_icon.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_button.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\custom_button.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_lab.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable-v24\\lab.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_search.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\fragment_search.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_background_textfield.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\background_textfield.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_text_strike.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\text_strike.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_add_item_layout.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\add_item_layout.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_home.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\fragment_home.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_client_login.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\activity_client_login.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_smpllogo.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable-v24\\smpllogo.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_error_24.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_baseline_error_24.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_shopping_bag_24.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_baseline_shopping_bag_24.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_splash.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\activity_splash.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_client_register.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\layout\\activity_client_register.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_account_circle_24.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_baseline_account_circle_24.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-v24_hospital.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable-v24\\hospital.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_baseline_add_circle_24.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\drawable\\ic_baseline_add_circle_24.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "H:\\anstudioprojects\\simpheal01\\MedicalApp\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    }
+]
