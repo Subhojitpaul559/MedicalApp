@@ -87,6 +87,7 @@ public class ClientLogin extends AppCompatActivity {
                             progressbar.setVisibility(View.GONE);
 
                         }
+                        finish();
                     }
                 });
             }

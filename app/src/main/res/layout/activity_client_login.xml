@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="simpheal"
         android:textSize="20sp"
-        android:textColor="@color/blue"
+        android:textColor="@color/purple_500"
         android:textAllCaps="true"
         android:layout_gravity="center|top"
         android:layout_marginTop="50dp"/>

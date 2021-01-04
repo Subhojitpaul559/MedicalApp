@@ -21,7 +21,7 @@ import com.google.firebase.auth.FirebaseUser;
 public class Navigation_activity extends AppCompatActivity {
     CardView meds;
     FirebaseAuth mAuth;
-    private ProgressBar progressBar;
+    //private ProgressBar progressBar;
 
 
     @Override
@@ -30,7 +30,7 @@ public class Navigation_activity extends AppCompatActivity {
         setContentView(R.layout.activity_navigation_activity);
         mAuth = FirebaseAuth.getInstance();
 
-        progressBar=findViewById(R.id.progressbar_nav);
+       // progressBar=findViewById(R.id.progressbar_nav);
 
         meds = findViewById(R.id.medicine);
         meds.setOnClickListener(new View.OnClickListener() {
@@ -39,10 +39,10 @@ public class Navigation_activity extends AppCompatActivity {
                 checkLogin();
          }
         });
-        if(getSupportActionBar()!=null){
+        /*if(getSupportActionBar()!=null){
             getSupportActionBar().hide();
 
-        }
+        }*/
     }
 
 
@@ -59,10 +59,10 @@ public class Navigation_activity extends AppCompatActivity {
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
             }
-            progressBar.setVisibility(View.VISIBLE);
+            //progressBar.setVisibility(View.VISIBLE);
         }else {
             Toast.makeText(this, "Internet connection disable!", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
+            //progressBar.setVisibility(View.GONE);
         }
     }
 }
