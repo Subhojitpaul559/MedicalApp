@@ -50,9 +50,16 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position,
                                     @NonNull ItemData model) {
         holder.name.setText(model.getName());
-        holder.desc.setText(model.getDescription());
+        holder.desc.setText(model.getCompany());
         holder.org_price.setText("₹"+model.getPrice());
-        holder.discountPrice.setText("₹"+model.getDprice());
+
+        float discount = Integer.parseInt(model.getDiscount());
+        float price = Integer.parseInt(model.getPrice());
+
+        int dprice = (int) ((price*(100-discount))/100);
+
+
+        holder.discountPrice.setText("₹"+dprice);
         holder.qty.setText("Qty :"+ model.getQty());
         holder.discount.setText(model.getDiscount()+"%off");
         holder.size.setText("Size :"+ model.getSize());

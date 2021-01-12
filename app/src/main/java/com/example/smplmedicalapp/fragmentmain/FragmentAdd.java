@@ -123,7 +123,7 @@ public class FragmentAdd extends Fragment {
         chooseimg = view.findViewById(R.id.choose_img);
         itemname = view.findViewById(R.id.name_value);
         imgname = view.findViewById(R.id.filename);
-        itemdesc = view.findViewById(R.id.desc_value);
+        itemdesc = view.findViewById(R.id.desc_value); //company
         spinner = view.findViewById(R.id.size_spinner);
         itemprice = view.findViewById(R.id.price);
         itemdiscount = view.findViewById(R.id.discount);
@@ -206,10 +206,10 @@ public class FragmentAdd extends Fragment {
                         String sizefinal =  itemsize.getText().toString().concat(spinner.getSelectedItem().toString());
                         databaseReference = FirebaseDatabase.getInstance().getReference("items");
                         //String itemURL = storageReference.child("Images/").getDownloadUrl().toString();
-                        String random = GenerateRandomString.randomString(9);
+                        String random = GenerateRandomString.randomString(19);
                         databaseReference.child(curuser).child(random).child("image").setValue(filestring);
                         databaseReference.child(curuser).child(random).child("name").setValue(itemname.getText().toString());
-                        databaseReference.child(curuser).child(random).child("description").setValue(itemdesc.getText().toString());
+                        databaseReference.child(curuser).child(random).child("company").setValue(itemdesc.getText().toString());
                         databaseReference.child(curuser).child(random).child("price").setValue(itemprice.getText().toString());
 
 

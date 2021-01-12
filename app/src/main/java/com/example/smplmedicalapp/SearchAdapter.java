@@ -80,7 +80,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ExampleVie
         holder.name.setText(currentItem.getName());
         holder.desc.setText(currentItem.getDescription());
         holder.org_price.setText("₹"+currentItem.getPrice());
-        holder.discountPrice.setText("₹"+currentItem.getDprice());
+
+
+        float discount = Integer.parseInt(currentItem.getDiscount());
+        float price = Integer.parseInt(currentItem.getPrice());
+
+        int dprice = (int) ((price*(100-discount))/100);
+        holder.discountPrice.setText("₹"+dprice);
         holder.qty.setText("Qty :"+ currentItem.getQty());
         holder.discount.setText(currentItem.getDiscount()+"%off");
         holder.size.setText("Size :"+ currentItem.getSize());

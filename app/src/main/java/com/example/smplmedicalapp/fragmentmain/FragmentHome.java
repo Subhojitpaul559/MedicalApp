@@ -105,6 +105,8 @@ public class FragmentHome extends Fragment {
                 Log.i(TAG, "onQueryTextSubmit: "+query);
                 Bundle bundleString = new Bundle();
                 bundleString.putString("key", query);
+
+
                 SearchFragment searchFragment = new SearchFragment();
                 searchFragment.setArguments(bundleString);
                 FragmentManager manager = getFragmentManager();

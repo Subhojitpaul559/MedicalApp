@@ -3,16 +3,15 @@ package com.example.smplmedicalapp;
 public class SearchModel {
 
 
-    private  String name, description, image, price, discount, qty, size, dprice ;
+    private  String name, description, image, price, discount, qty, size ;
 
 
-    public SearchModel(String name, String description,  String image, String price, String dprice, String size, String qty, String discount) {
+    public SearchModel(String name, String description,  String image, String price,  String size, String qty, String discount) {
 
         this.name = name;
         this.image = image;
         this.description = description;
         this.price = price;
-        this.dprice = dprice;
         this.discount = discount;
         this.qty = qty;
         this.size = size;
@@ -75,11 +74,5 @@ public class SearchModel {
         this.size = size;
     }
 
-    public String getDprice() {
-        return dprice;
-    }
 
-    public void setDprice(String dprice) {
-        this.dprice = dprice;
-    }
 }

@@ -86,7 +86,7 @@ public class Profile_Fragment extends Fragment {
         firebaseStorage = FirebaseStorage.getInstance();
         StorageReference myProfileRef = firebaseStorage
                 .getReference();
-        myProfileRef.child("users/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        myProfileRef.child("Stores/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(Edit_pic);
@@ -112,18 +112,46 @@ public class Profile_Fragment extends Fragment {
         });
 
         Log.i(TAG, mAuth.getUid());
-        databaseReference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid());
+        //databaseReference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid());
+
+        databaseReference  =FirebaseDatabase.getInstance().getReference("medicineProfile");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                //String name =  snapshot.child("client_name").getValue().toString();
-                //Log.i("test key: ", name);
-                Person.setText(snapshot.child("client_name").getValue().toString());
-                Org.setText(snapshot.child("org_name").getValue().toString());
-                Email_id.setText(snapshot.child("email").getValue().toString());
-                Mobile_no.setText(snapshot.child("phone").getValue().toString());
-                address_client.setText(snapshot.child("full_addr").getValue().toString());
-                gst_no.setText(snapshot.child("gst").getValue().toString());
+
+                if (snapshot.hasChild(mAuth.getUid())) {
+
+                    Log.i("check child exists", "onDataChange: "+mAuth.getUid());
+                    databaseReference = FirebaseDatabase.getInstance().getReference("medicineProfile").child(mAuth.getUid());
+                    databaseReference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            //String name =  snapshot.child("client_name").getValue().toString();
+                            //Log.i("test key: ", name);
+                            Person.setText(snapshot.child("fullname").getValue().toString());
+                            Org.setText(snapshot.child("shopName").getValue().toString());
+                            Email_id.setText(snapshot.child("email").getValue().toString());
+                            Mobile_no.setText(snapshot.child("phone").getValue().toString());
+                            address_client.setText(snapshot.child("address").getValue().toString());
+                            gst_no.setText(snapshot.child("gst").getValue().toString());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }else{
+
+                    Person.setText("");
+                    Org.setText("");
+                    Email_id.setText("");
+                    Mobile_no.setText("");
+                    address_client.setText("");
+                    gst_no.setText("");
+                }
             }
 
             @Override
@@ -206,11 +234,11 @@ public class Profile_Fragment extends Fragment {
     private void UploadImg(Uri imageuri){
         firebaseStorage = FirebaseStorage.getInstance();
         StorageReference imgref = firebaseStorage.getReference();
-        imgref.child("users/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        imgref.child("Stores/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Log.i("existing file path : ", "users/" +mAuth.getCurrentUser().getUid()+ "profile.jpg");
-                imgref.child("users/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                Log.i("existing file path : ", "Stores/" +mAuth.getCurrentUser().getUid()+ "profile.jpg");
+                imgref.child("Stores/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded.", Toast.LENGTH_SHORT).show();
@@ -231,7 +259,7 @@ public class Profile_Fragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                imgref.child("users/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                imgref.child("Stores/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").putFile(imageuri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Toast.makeText(getActivity().getApplicationContext(), "Image Uploaded.", Toast.LENGTH_SHORT).show();

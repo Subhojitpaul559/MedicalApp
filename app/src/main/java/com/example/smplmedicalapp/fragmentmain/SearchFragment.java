@@ -190,15 +190,15 @@ public class SearchFragment extends Fragment {
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
 
                     String name=ds.child("name").getValue().toString();
-                    String description=ds.child("description").getValue().toString();
+                    String company=ds.child("company").getValue().toString();
                     String image=ds.child("image").getValue().toString();
                     String discount=ds.child("discount").getValue().toString();
-                    String dprice=ds.child("dprice").getValue().toString();
+                    //String dprice=ds.child("dprice").getValue().toString();
                     String price=ds.child("price").getValue().toString();
                     String qty=ds.child("qty").getValue().toString();
                     String size=ds.child("size").getValue().toString();
 
-                    SearchModel item = new SearchModel(name, description, image, discount, dprice, price, qty, size);
+                    SearchModel item = new SearchModel(name, company, image,  price,  size, qty, discount);
                     exampleList.add(item);
                 }
                 RecyclerView recyclerView = getView().findViewById(R.id.searchrclv);

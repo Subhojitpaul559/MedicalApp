@@ -90,12 +90,12 @@ public class FragmentEditAcc extends Fragment {
        update.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-              databaseReference = FirebaseDatabase.getInstance().getReference("users");
-               if(!mClient_name.getText().toString().matches("")) { databaseReference.child(mAuth.getUid()).child("client_name").setValue(mClient_name.getText().toString());}
-               if(!mOrg_name.getText().toString().matches(""))  { databaseReference.child(mAuth.getUid()).child("org_name").setValue(mOrg_name.getText().toString());}
+              databaseReference = FirebaseDatabase.getInstance().getReference("medicineProfile");
+               if(!mClient_name.getText().toString().matches("")) { databaseReference.child(mAuth.getUid()).child("fullname").setValue(mClient_name.getText().toString());}
+               if(!mOrg_name.getText().toString().matches(""))  { databaseReference.child(mAuth.getUid()).child("shopName").setValue(mOrg_name.getText().toString());}
                if(!mPhn_no.getText().toString().matches("") || mPhn_no.getText().toString().length() ==10)   { databaseReference.child(mAuth.getUid()).child("phone").setValue(mPhn_no.getText().toString());}
                if(!mEmail.getText().toString().matches(""))  { databaseReference.child(mAuth.getUid()).child("email").setValue(mEmail.getText().toString());}
-               if(!mFull_address.getText().toString().matches("")) { databaseReference.child(mAuth.getUid()).child("full_addr").setValue(mFull_address.getText().toString());}
+               if(!mFull_address.getText().toString().matches("")) { databaseReference.child(mAuth.getUid()).child("address").setValue(mFull_address.getText().toString());}
                if(!mGst.getText().toString().matches("") || isValidGSTNo(mGst.getText().toString())) { databaseReference.child(mAuth.getUid()).child("gst").setValue(mGst.getText().toString()); }
                Toast.makeText(getContext(), "User Updated", Toast.LENGTH_SHORT).show();
 

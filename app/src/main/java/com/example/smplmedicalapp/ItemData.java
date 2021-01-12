@@ -2,18 +2,17 @@ package com.example.smplmedicalapp;
 
 public class ItemData {
 
-    private  String name, description, image, price, discount, qty, size, dprice ;
+    private  String name, company, image, price, discount, qty, size  ;
 
     public ItemData() {
     }
 
-    public ItemData(String name, String description,  String image, String price, String dprice, String size, String qty, String discount) {
+    public ItemData(String name, String company,  String image, String price,  String size, String qty, String discount) {
 
         this.name = name;
         this.image = image;
-        this.description = description;
+        this.company = company;
         this.price = price;
-        this.dprice = dprice;
         this.discount = discount;
         this.qty = qty;
         this.size = size;
@@ -36,12 +35,12 @@ public class ItemData {
         this.image = image;
     }
 
-    public String getDescription() {
-        return description;
+    public String getCompany() {
+        return company;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
     public String getPrice() {
@@ -76,11 +75,4 @@ public class ItemData {
         this.size = size;
     }
 
-    public String getDprice() {
-        return dprice;
-    }
-
-    public void setDprice(String dprice) {
-        this.dprice = dprice;
-    }
 }
