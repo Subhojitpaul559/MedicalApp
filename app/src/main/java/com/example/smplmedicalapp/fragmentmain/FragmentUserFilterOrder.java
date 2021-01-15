@@ -33,6 +33,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FragmentUserFilterOrder#newInstance} factory method to
@@ -117,16 +119,25 @@ public class FragmentUserFilterOrder extends Fragment {
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for(DataSnapshot snapshot2: snapshot.getChildren()){
 
+                                Log.i("StoreID", snapshot2.getKey());
 
                                 DatabaseReference medref = chref.child(snapshot2.getKey());
+
+
+
                                 medref.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        for(DataSnapshot snapshot3: snapshot.getChildren()){
+                                        for(DataSnapshot snapshot3: snapshot.getChildren()) {
 
+                                            Log.i("check keys 3", snapshot3.getKey());
                                             OrderModel orderModel = snapshot3.getValue(OrderModel.class);
+                                            //orderModel.
                                             Log.i("childval3:-- ", String.valueOf(snapshot3.getValue()));
 
+                                            Log.i("joe styles", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                           if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(orderModel.getStoreId())) {
+                                            Log.i("curuser", String.valueOf(user));
                                             String name = orderModel.getName();
                                             String mName = orderModel.getMedicineName();
                                             String address = orderModel.getAddress();
@@ -136,15 +147,23 @@ public class FragmentUserFilterOrder extends Fragment {
                                             String quantity = orderModel.getQuantity();
                                             String total = String.valueOf(Float.parseFloat(amount) + Float.parseFloat(tax));
                                             String orderID = snapshot2.getKey();
+                                            String storeId = orderModel.getStoreId();
+                                            String umedID = orderModel.getUmedID();
+                                            String UID = orderModel.getUID();
+                                            String ustatus = orderModel.getUstatus();
+
+                                            Log.i("storeId", storeId);
 
                                             Log.i("childval3//amount:-- ", String.valueOf(orderModel.getAmount()));
 
-                                            OrderModel item = new OrderModel(mName, quantity, amount, address, name, phone, tax, total, orderID );
+                                            OrderModel item = new OrderModel(mName, quantity, amount, address,
+                                                    name, phone, tax, total, orderID, storeId, umedID, UID, ustatus);
                                             orderlist.add(item);
 
                                             Log.i("orderlist value :--", String.valueOf(orderlist));
 
 
+                                            }
                                         }
 
                                         RecyclerView recyclerView = view.findViewById(R.id.allorder_rclv);
@@ -162,7 +181,7 @@ public class FragmentUserFilterOrder extends Fragment {
                                     }
                                 });
 
-                                Log.i("childval2:-- ", String.valueOf(snapshot2.getValue()));
+                                Log.i("childval2:-- ", String.valueOf(snapshot2.getKey()));
                             }
                         }
 
