@@ -80,6 +80,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
 
                 uidref.child(umedID).child("ustatus").setValue("ACCEPTED");
 
+/*
 
 String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                 DatabaseReference vendorOderRef = FirebaseDatabase.getInstance()
@@ -115,25 +116,6 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                                             vendorOrderModel.setStatus("ACCEPTED");
                                         }
 
-                                        /*voderRef2.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                for(DataSnapshot snapshot3: snapshot.getChildren()){
-
-                                                    //snapshot3.child("uOID").getValue();
-                                                    //Log.i("testing which ID", snapshot3.get);
-                                                    VendorOrderModel vendorOrderModel = snapshot3.getValue(VendorOrderModel.class);
-                                                    Log.i("vendor model test", vendorOrderModel.getuOID());
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });*/
-
-
                                     }
                                 }
 
@@ -152,6 +134,7 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                     }
                 });
 
+*/
 
 
                 holder.changeOdr.setText("Accepted");

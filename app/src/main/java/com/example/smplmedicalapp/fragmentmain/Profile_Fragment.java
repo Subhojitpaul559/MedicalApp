@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smplmedicalapp.ClientLogin;
+import com.example.smplmedicalapp.MainActivity;
 import com.example.smplmedicalapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,7 +50,7 @@ public class Profile_Fragment extends Fragment {
     private ImageView Displaypic, Edit_pic;
     private TextView Person, Org, Email_id, Mobile_no, address_client, gst_no, Logout_txt, reset_password;
     private Button edit_btn;
-    private TextView resetpassword;
+    private TextView resetpassword, profilewarning;
     private FirebaseAuth mAuth;
     private Uri imguri;
 
@@ -80,6 +81,11 @@ public class Profile_Fragment extends Fragment {
         resetpassword = view.findViewById(R.id.gotoresetpasswword);
         Edit_pic = view.findViewById(R.id.ProfilePic);
         edit_btn = view.findViewById(R.id.EditAccount);
+        profilewarning = view.findViewById(R.id.profileWarning);
+        profilewarning.setVisibility(View.VISIBLE);
+
+        setProfilewarning();
+
 
         db = FirebaseFirestore.getInstance();
 
@@ -102,12 +108,20 @@ public class Profile_Fragment extends Fragment {
         edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentEditAcc fragmentEditAcc = new FragmentEditAcc();
+
+              /*  Intent Getintent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://simpheal.com/medicineshop/index.html"));
+                startActivity(Getintent);
+*/
+
+                Uri uriUrl = Uri.parse("https://simpheal.com/medicineshop/index.html");
+                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+                startActivity(launchBrowser);
+                /*FragmentEditAcc fragmentEditAcc = new FragmentEditAcc();
                 FragmentManager manager = getFragmentManager();
                 manager.beginTransaction()
 
                         .replace(R.id.HomeActivity, fragmentEditAcc, fragmentEditAcc.getTag())
-                        .commit();
+                        .commit();*/
             }
         });
 
@@ -231,6 +245,31 @@ public class Profile_Fragment extends Fragment {
         });
     }*/
 
+    public void setProfilewarning(){
+        String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference checkVendorLogin = FirebaseDatabase.getInstance().getReference().child("medicineProfile");
+        checkVendorLogin.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot checksnapshot: snapshot.getChildren()){
+
+                    Log.i("medicine profile - ", checksnapshot.getKey());
+                    if(checksnapshot.getKey().equals(user)){
+
+                        profilewarning.setVisibility(View.INVISIBLE);
+                        Log.i("login check profile", user);
+                        //Toast.makeText(ClientLogin.this, "Login successfully", Toast.LENGTH_SHORT).show();
+                       // startActivity(new Intent(ClientLogin.this, MainActivity.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void UploadImg(Uri imageuri){
         firebaseStorage = FirebaseStorage.getInstance();
         StorageReference imgref = firebaseStorage.getReference();

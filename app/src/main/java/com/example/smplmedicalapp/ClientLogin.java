@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.text.TextUtils.*;
 
@@ -79,8 +85,33 @@ public class ClientLogin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            DatabaseReference checkVendorLogin = FirebaseDatabase.getInstance().getReference().child("users");
+                            checkVendorLogin.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(DataSnapshot checksnapshot: snapshot.getChildren()){
+
+                                        Log.i("medicine profile - ", checksnapshot.getKey());
+                                        if(checksnapshot.getKey().equals(user)){
+
+                                            Log.i("login check profile", user);
+                                            Toast.makeText(ClientLogin.this, "Login successfully", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(ClientLogin.this, MainActivity.class));
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+/*
                             Toast.makeText(ClientLogin.this, "Login successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(ClientLogin.this, MainActivity.class));
+                            startActivity(new Intent(ClientLogin.this, MainActivity.class));*/
 
                         } else {
                             Toast.makeText(ClientLogin.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
