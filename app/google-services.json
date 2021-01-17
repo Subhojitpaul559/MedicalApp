@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "201975435000",
-    "project_id": "smplmedicalapp-408ea",
-    "storage_bucket": "smplmedicalapp-408ea.appspot.com"
+    "project_number": "955406431716",
+    "firebase_url": "https://smplmedicalapp-b4a88-default-rtdb.firebaseio.com",
+    "project_id": "smplmedicalapp-b4a88",
+    "storage_bucket": "smplmedicalapp-b4a88.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:201975435000:android:6eed23058f87d784ba350d",
+        "mobilesdk_app_id": "1:955406431716:android:100a6a3411c0efe513c3f1",
         "android_client_info": {
           "package_name": "com.example.smplmedicalapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "201975435000-fepvjp06ngkn1eo84dhus9i3k1uqkbl2.apps.googleusercontent.com",
+          "client_id": "955406431716-ncdqumk13o4q29euurka7gm42b2aqnmb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBOP8qV1irNAYztDfonArUupo8L7cAb4Xw"
+          "current_key": "AIzaSyBAZuFvnL3fiB_M9du_ZgOpHBeH-X7ErSo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "201975435000-fepvjp06ngkn1eo84dhus9i3k1uqkbl2.apps.googleusercontent.com",
+              "client_id": "955406431716-ncdqumk13o4q29euurka7gm42b2aqnmb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -34,7 +34,7 @@ public class ClientRegisterActivity extends AppCompatActivity {
     private TextView Signin;
     private ProgressBar progressbar;
 
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,31 +94,35 @@ public class ClientRegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Invalid GSTN !", Toast.LENGTH_SHORT).show();
                 }else {
 
-                    mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                databaseReference = FirebaseDatabase.getInstance().getReference("users");
-                                databaseReference.child(mAuth.getUid()).child("org_name").setValue(mOrg_name.getText().toString());
-                                databaseReference.child(mAuth.getUid()).child("client_name").setValue(mClient_name.getText().toString());
-                                databaseReference.child(mAuth.getUid()).child("phone").setValue(mPhn_no.getText().toString());
-                                databaseReference.child(mAuth.getUid()).child("email").setValue(mEmail.getText().toString());
-                                databaseReference.child(mAuth.getUid()).child("full_addr").setValue(mFull_address.getText().toString());
-                                databaseReference.child(mAuth.getUid()).child("gst").setValue(mGst.getText().toString());
+                     mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.i("check signup", mAuth.getUid());
+                                        databaseReference = FirebaseDatabase.getInstance()
+                                                .getReferenceFromUrl("https://smplmedicalapp-b4a88-default-rtdb.firebaseio.com/")
+                                                .child("users");
+                                        databaseReference.child(mAuth.getUid()).child("org_name").setValue(mOrg_name.getText().toString());
+                                        databaseReference.child(mAuth.getUid()).child("client_name").setValue(mClient_name.getText().toString());
+                                        databaseReference.child(mAuth.getUid()).child("phone").setValue(mPhn_no.getText().toString());
+                                        databaseReference.child(mAuth.getUid()).child("email").setValue(mEmail.getText().toString());
+                                        databaseReference.child(mAuth.getUid()).child("full_addr").setValue(mFull_address.getText().toString());
+                                        databaseReference.child(mAuth.getUid()).child("gst").setValue(mGst.getText().toString());
 
 
-                                Toast.makeText(ClientRegisterActivity.this, "User created", Toast.LENGTH_SHORT).show();
-                                Log.i("UID", "onComplete: " + mAuth.getUid());
-                                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                        Toast.makeText(ClientRegisterActivity.this, "User created", Toast.LENGTH_SHORT).show();
+                                        Log.i("UID", "onComplete: " + mAuth.getUid());
+                                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
 
-                            } else {
-                                Toast.makeText(ClientRegisterActivity.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                progressbar.setVisibility(View.GONE);
-                            }
+                                    } else {
+                                        Toast.makeText(ClientRegisterActivity.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                        progressbar.setVisibility(View.GONE);
+                                    }
 
-                        }
-                    });
+                                }
+                            });
 
                 }
 

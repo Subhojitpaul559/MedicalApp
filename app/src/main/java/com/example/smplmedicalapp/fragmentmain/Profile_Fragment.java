@@ -109,9 +109,6 @@ public class Profile_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-              /*  Intent Getintent = new Intent(Intent.ACTION_VIEW,Uri.parse("https://simpheal.com/medicineshop/index.html"));
-                startActivity(Getintent);
-*/
 
                 Uri uriUrl = Uri.parse("https://simpheal.com/medicineshop/index.html");
                 Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);

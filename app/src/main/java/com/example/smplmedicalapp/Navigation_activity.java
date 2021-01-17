@@ -61,7 +61,7 @@ public class Navigation_activity extends AppCompatActivity {
             }
             //progressBar.setVisibility(View.VISIBLE);
         }else {
-            Toast.makeText(this, "Internet connection disable!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Internet connection unavailable!", Toast.LENGTH_SHORT).show();
             //progressBar.setVisibility(View.GONE);
         }
     }

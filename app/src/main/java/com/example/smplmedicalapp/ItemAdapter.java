@@ -77,7 +77,9 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
 
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReferenceFromUrl("gs://smplmedicalapp-408ea.appspot.com/Images/").child(model.getImage());
+        StorageReference storageReference = storage
+                .getReferenceFromUrl("gs://smplmedicalapp-b4a88.appspot.com/Images/")
+                .child(model.getImage());
         File file = null;
         try {
             file = File.createTempFile("image", "jpg");

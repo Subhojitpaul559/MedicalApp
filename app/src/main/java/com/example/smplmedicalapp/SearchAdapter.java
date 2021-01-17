@@ -67,7 +67,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ExampleVie
     @NonNull
     @Override
     public ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_item_layout, parent, false);
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.add_item_layout, parent, false);
         return new ExampleViewHolder(v);
     }
     @Override
@@ -105,7 +106,9 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ExampleVie
 
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageReference = storage.getReferenceFromUrl("gs://smplmedicalapp-408ea.appspot.com/Images/").child(currentItem.getImage());
+        StorageReference storageReference = storage
+                .getReferenceFromUrl("gs://smplmedicalapp-b4a88.appspot.com/Images/")
+                .child(currentItem.getImage());
         File file = null;
         try {
             file = File.createTempFile("image", "jpg");

@@ -182,12 +182,17 @@ public class SearchFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String curuser = user.getUid();
         String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com"; //https://smplmedicalapp-408ea-default-rtdb.firebaseio.com
-        databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
+        databaseReference = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl(url)
+                .child("items").child(curuser);
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds:dataSnapshot.getChildren()){
+
+                    Log.i("demo", ds.getKey());
+
 
                     String name=ds.child("name").getValue().toString();
                     String company=ds.child("company").getValue().toString();
@@ -198,12 +203,14 @@ public class SearchFragment extends Fragment {
                     String qty=ds.child("qty").getValue().toString();
                     String size=ds.child("size").getValue().toString();
 
-                    SearchModel item = new SearchModel(name, company, image,  price,  size, qty, discount);
+                    SearchModel item = new SearchModel(name, company, image,
+                            price,  size, qty, discount);
                     exampleList.add(item);
                 }
                 RecyclerView recyclerView = getView().findViewById(R.id.searchrclv);
                 recyclerView.setHasFixedSize(true);
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+                RecyclerView.LayoutManager layoutManager = new
+                        LinearLayoutManager(getContext());
                 adapter = new SearchAdapter(exampleList);
                 recyclerView.setLayoutManager(layoutManager);
                 adapter.getFilter().filter(val);

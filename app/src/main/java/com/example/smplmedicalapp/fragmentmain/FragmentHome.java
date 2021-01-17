@@ -133,7 +133,8 @@ public class FragmentHome extends Fragment {
 
        // Log.i(TAG, "onSuccess: "+user.getUid());
         String curuser = user.getUid();
-       databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl(url).child("items").child(curuser);
+       databaseReference = FirebaseDatabase.getInstance()
+               .getReferenceFromUrl(url).child("items").child(curuser);
 
        FirebaseRecyclerOptions<ItemData> options =
                    new FirebaseRecyclerOptions.
