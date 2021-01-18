@@ -72,7 +72,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
 
                 DatabaseReference uidref = FirebaseDatabase
                         .getInstance()
-                        .getReferenceFromUrl("https://smplmedicalapp-b4a88-default-rtdb.firebaseio.com/userorders")
+                        .getReferenceFromUrl("https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/userorders")
                         .child(UID)
                         .child(uorderID);
 

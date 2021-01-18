@@ -92,7 +92,8 @@ public class Profile_Fragment extends Fragment {
         firebaseStorage = FirebaseStorage.getInstance();
         StorageReference myProfileRef = firebaseStorage
                 .getReference();
-        myProfileRef.child("Stores/" +mAuth.getCurrentUser().getUid()+ "profile.jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        myProfileRef.child("Stores/" +mAuth.getCurrentUser().getUid()+ "profile.jpg")
+                .getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(Edit_pic);
@@ -133,7 +134,8 @@ public class Profile_Fragment extends Fragment {
                 if (snapshot.hasChild(mAuth.getUid())) {
 
                     Log.i("check child exists", "onDataChange: "+mAuth.getUid());
-                    databaseReference = FirebaseDatabase.getInstance().getReference("medicineProfile").child(mAuth.getUid());
+                    databaseReference = FirebaseDatabase.getInstance()
+                            .getReference("medicineProfile").child(mAuth.getUid());
                     databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {

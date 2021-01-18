@@ -107,7 +107,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ExampleVie
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageReference = storage
-                .getReferenceFromUrl("gs://smplmedicalapp-b4a88.appspot.com/Images/")
+                .getReferenceFromUrl("gs://smplmedicalapp-408ea.appspot.com/Images/")
                 .child(currentItem.getImage());
         File file = null;
         try {
