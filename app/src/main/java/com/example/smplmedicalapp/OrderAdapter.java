@@ -45,19 +45,19 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
         OrderModel currentItem = list.get(position);
         //final int index = holder.getAdapterPosition();
 
-        holder.quantity.setText(list.get(position).getQuantity());
-        holder.address.setText(list.get(position).getAddress());
+        holder.quantity.setText("Qty:"+list.get(position).getQuantity());
+        holder.address.setText("address:"+list.get(position).getAddress());
         holder.medicineName.setText(list.get(position).getMedicineName());
-        holder.name.setText(list.get(position).getName());
-        holder.amount.setText(list.get(position).getAmount());
-        holder.tax.setText(list.get(position).getTax());
-        holder.orderid.setText(list.get(position).getOrderID());
+        holder.name.setText("name: "+list.get(position).getName());
+        holder.amount.setText("₹"+list.get(position).getAmount());
+        holder.tax.setText("₹"+list.get(position).getTax());
+        holder.orderid.setText("id"+list.get(position).getOrderID());
         float amount = Float.parseFloat(list.get(position).getAmount());
         float tax = Float.parseFloat(list.get(position).getTax());
         float total = amount + tax;
         holder.changeOdr.setText(list.get(position).getUstatus());
-        holder.total.setText(String.valueOf(total));
-        holder.phone.setText(list.get(position).getPhone());
+        holder.total.setText("₹"+String.valueOf(total));
+        holder.phone.setText("phone: "+list.get(position).getPhone());
         holder.changeOdr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

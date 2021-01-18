@@ -141,7 +141,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <Button
 
@@ -150,10 +151,25 @@
                     android:layout_height="40dp"
                     android:layout_below="@+id/price"
                     android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="2dp"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/item_img"
                     android:layout_toRightOf="@+id/item_name"
                     android:text="@string/remove"
+                    android:layout_weight="1"
+                    android:textSize="10sp"/>
+
+                <Button
+                    android:id="@+id/item_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/item_img"
+                    android:layout_toRightOf="@+id/item_name"
+                    android:text="Edit "
+                    android:layout_weight="1"
                     android:textSize="10sp"/>
 
             </LinearLayout>
