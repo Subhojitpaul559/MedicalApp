@@ -99,6 +99,8 @@ public class ClientLogin extends AppCompatActivity {
                                             Log.i("login check profile", user);
                                             Toast.makeText(ClientLogin.this, "Login successfully", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(ClientLogin.this, MainActivity.class));
+                                            break;
+                                            //finish();
                                         }
                                     }
                                 }

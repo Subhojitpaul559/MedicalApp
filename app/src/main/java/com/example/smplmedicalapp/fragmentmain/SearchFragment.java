@@ -1,10 +1,13 @@
 package com.example.smplmedicalapp.fragmentmain;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,26 +15,33 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.smplmedicalapp.ItemAdapter;
-import com.example.smplmedicalapp.ItemData;
 import com.example.smplmedicalapp.R;
-import com.example.smplmedicalapp.SearchAdapter;
 import com.example.smplmedicalapp.SearchModel;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -207,7 +217,7 @@ public class SearchFragment extends Fragment {
                             price,  size, qty, discount);
                     exampleList.add(item);
                 }
-                RecyclerView recyclerView = getView().findViewById(R.id.searchrclv);
+
                 recyclerView.setHasFixedSize(true);
                 RecyclerView.LayoutManager layoutManager = new
                         LinearLayoutManager(getContext());
@@ -224,4 +234,193 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
+
+    public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ExampleViewHolder> implements Filterable {
+        private List<SearchModel> exampleList;
+        private List<SearchModel> exampleListFull;
+
+        @Override
+        public Filter getFilter() {
+            return examplefilter;
+        }
+
+        public class ExampleViewHolder extends RecyclerView.ViewHolder {
+
+            public ImageView imageView;
+            public TextView name, desc, price, qty, discount, size, org_price, discountPrice ;
+            public Button button, edit;
+            public RelativeLayout relativeLayout;
+
+            public ExampleViewHolder(View itemView){
+                super(itemView);
+                this.edit = itemView.findViewById(R.id.item_edit);
+                this.imageView = itemView.findViewById(R.id.item_img);
+                this.name = itemView.findViewById(R.id.item_name);
+                this.desc = itemView.findViewById(R.id.item_desc);
+                this.org_price = itemView.findViewById(R.id.item_original_price);
+                this.discountPrice = itemView.findViewById(R.id.item_price);
+                this.discount = itemView.findViewById(R.id.item_discount);
+                this.qty = itemView.findViewById(R.id.item_qty);
+                this.size = itemView.findViewById(R.id.item_size);
+                this.button = itemView.findViewById(R.id.btn_remove);
+                // button.setVisibility(View.INVISIBLE);
+                relativeLayout = itemView.findViewById(R.id.item_relativeLayout);
+            }
+
+        }
+        public SearchAdapter(List<SearchModel> exampleList) {
+            this.exampleList = exampleList;
+            exampleListFull = new ArrayList<>(exampleList);
+        }
+        @NonNull
+        @Override
+        public SearchAdapter.ExampleViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.add_item_layout, parent, false);
+            return new SearchAdapter.ExampleViewHolder(v);
+        }
+        @Override
+        public void onBindViewHolder(@NonNull SearchAdapter.ExampleViewHolder holder, int position) {
+            SearchModel currentItem = exampleList.get(position);
+            //holder.imageView.setImageResource(currentItem.getImageResource());
+            //holder.textView2.setText(currentItem.getText2());
+
+
+            holder.name.setText(currentItem.getName());
+            holder.desc.setText(currentItem.getDescription());
+            holder.org_price.setText("₹"+currentItem.getPrice());
+
+
+            float discount = Integer.parseInt(currentItem.getDiscount());
+            float price = Integer.parseInt(currentItem.getPrice());
+
+            int dprice = (int) ((price*(100-discount))/100);
+            holder.discountPrice.setText("₹"+dprice);
+            holder.qty.setText("Qty :"+ currentItem.getQty());
+            holder.discount.setText(currentItem.getDiscount()+"%off");
+            holder.size.setText("Size :"+ currentItem.getSize());
+
+            holder.edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    editItem(currentItem.getName());
+                }
+            });
+
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {  DatabaseReference removeref =  FirebaseDatabase.getInstance().getReference()
+                    .child("items")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                Query removequery = removeref
+                        .orderByChild("name").equalTo(currentItem.getName()) ;
+
+                removequery.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot ds : snapshot.getChildren()){
+
+                            ds.getRef().removeValue();
+                            adapter.notifyDataSetChanged();
+
+                            FragmentHome fragmentHome = new FragmentHome();
+                            FragmentManager manager = getFragmentManager();
+                            manager.beginTransaction()
+
+                                    .replace(R.id.HomeActivity, fragmentHome, fragmentHome.getTag())
+                                    .commit();
+
+                            break;
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+                Toast.makeText( v.getContext(), "Removed !", Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageReference = storage
+                    .getReferenceFromUrl("gs://smplmedicalapp-408ea.appspot.com/Images/")
+                    .child(currentItem.getImage());
+            File file = null;
+            try {
+                file = File.createTempFile("image", "jpg");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            File finalFile = file;
+            storageReference.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(finalFile.getAbsolutePath());
+                    holder.imageView.setImageBitmap(bitmap);
+                }
+            });
+
+        }
+        @Override
+        public int getItemCount() {
+            return exampleList.size();
+        }
+
+        private Filter examplefilter= new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<SearchModel> filterlist=new ArrayList<>();
+                if(constraint==null|| constraint.length()==0){
+                    filterlist.addAll(exampleListFull);
+                }
+                else{
+                    String pattrn=constraint.toString().toLowerCase().trim();
+                    for(SearchModel item :exampleListFull){
+                        if(item.getName().toLowerCase().contains(pattrn)){
+                            filterlist.add(item);
+                        }
+                    }
+                }
+                FilterResults filterResults=new FilterResults();
+                filterResults.values=filterlist;
+                return filterResults;
+
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                exampleList.clear();
+                exampleList.addAll((List)results.values);
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    private void editItem(String name) {
+
+
+        Bundle bundleString = new Bundle();
+        bundleString.putString("editname", name);
+
+
+        FragmentAdd fragmentAdd = new FragmentAdd();
+        fragmentAdd.setArguments(bundleString);
+        FragmentManager manager = getFragmentManager();
+        manager.beginTransaction()
+
+                .replace(R.id.HomeActivity, fragmentAdd, fragmentAdd.getTag())
+                .commit();
+    }
+
 }

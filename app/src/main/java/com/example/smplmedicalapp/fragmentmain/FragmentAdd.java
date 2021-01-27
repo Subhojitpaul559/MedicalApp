@@ -30,6 +30,7 @@ import java.util.Random;
 import java.util.Random.*;
 
 import com.example.smplmedicalapp.GenerateRandomString;
+import com.example.smplmedicalapp.ItemData;
 import com.example.smplmedicalapp.MainActivity;
 import com.example.smplmedicalapp.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,8 +38,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -66,6 +71,7 @@ public class FragmentAdd extends Fragment {
     private ImageView imageView;
     private Spinner spinner;
     File imgfile;
+    public String[] size_list;
     private final int PICK_IMAGE = 100;
 
     FirebaseStorage storage;
@@ -80,6 +86,7 @@ public class FragmentAdd extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public  String  val = "";
     String filestring;
     public FragmentAdd() {
         // Required empty public constructor
@@ -111,6 +118,7 @@ public class FragmentAdd extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -118,6 +126,8 @@ public class FragmentAdd extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add, container, false);
+
+        Toast.makeText(getContext(), "Choose Image first !", Toast.LENGTH_SHORT).show();
 
         addbtn = view.findViewById(R.id.btn_additem);
         chooseimg = view.findViewById(R.id.choose_img);
@@ -133,7 +143,21 @@ public class FragmentAdd extends Fragment {
         imageView = view.findViewById(R.id.itemimageview);
         imageView.setImageResource(R.drawable.ic_baseline_add_a_photo_24);
 
-        String[] size_list = new String[3];
+
+
+        if(getArguments() != null){
+
+            val = getArguments().getString("editname");
+            addbtn.setText("Edit Item");
+
+        }
+
+
+
+
+
+
+         size_list = new String[3];
         size_list[0] = "Choose mg/mL";
         size_list[1] = "mL";
         size_list[2] = "mg";
@@ -151,6 +175,8 @@ public class FragmentAdd extends Fragment {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+
+        fillData(val);
         chooseimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,10 +193,199 @@ public class FragmentAdd extends Fragment {
         addbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddItem();
+                if(val.matches(""))
+                    AddItem();
+                else{
+
+
+
+                        EditItem(val);
+
+                }
+
             }
         });
         return view;
+    }
+
+    private void fillData(String val) {
+
+
+
+
+        /*int db_or_price = Integer.parseInt(itemprice.getText().toString());
+        int db_dis = Integer.parseInt(itemdiscount.getText().toString());
+        double db_dis_price = ((db_or_price) * (100 - db_dis))/100;*/
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Log.i(TAG, "onSuccess: " + user.getUid());
+        String curuser = user.getUid();
+        String sizefinal =  itemsize.getText().toString().concat(spinner.getSelectedItem().toString());
+        databaseReference = FirebaseDatabase.getInstance().getReference("items").child(curuser);
+        //String itemURL = storageReference.child("Images/").getDownloadUrl().toString();
+        DatabaseReference editref =  FirebaseDatabase.getInstance().getReference()
+                .child("items")
+                .child(curuser);
+
+        Query editquery = editref
+                .orderByChild("name").equalTo(val) ;
+        editquery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()){
+
+                    databaseReference = databaseReference.child(ds.getKey());
+                    ItemData getdata = ds.getValue(ItemData.class);
+
+                    itemname.setText(getdata.getName());
+                    itemdesc.setText(getdata.getCompany());
+                    itemprice.setText(getdata.getPrice());
+                    itemdiscount.setText(getdata.getDiscount());
+                    itemqty.setText(getdata.getQty());
+                    itemsize.setText(getdata.getSize().replaceAll("[^0-9]", ""));
+                    imgname.setText(getdata.getImage());
+
+                    String str = getdata.getSize();
+                    StringBuffer unit = new StringBuffer();
+                    for (int i=0; i<str.length(); i++)
+                    {
+                        if(Character.isAlphabetic(str.charAt(i)))
+                            unit.append(str.charAt(i));
+
+                    }
+
+                    spinner.setSelection(unitpos(unit));
+                    Log.i("get data", getdata.getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        String random = GenerateRandomString.randomString(19);
+
+
+
+    }
+
+    private int unitpos( StringBuffer unit) {
+
+        int pos = -1 ;
+        if(String.valueOf(unit).toLowerCase().equals(size_list[1].toLowerCase()))
+            pos = 1;
+        if(String.valueOf(unit).toLowerCase().equals(size_list[2].toLowerCase()))
+            pos = 2;
+        return pos;
+    }
+
+    private void EditItem(String val) {
+
+
+
+        int db_or_price = Integer.parseInt(itemprice.getText().toString());
+        int db_dis = Integer.parseInt(itemdiscount.getText().toString());
+        double db_dis_price = ((db_or_price) * (100 - db_dis))/100;
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        Log.i(TAG, "onSuccess: " + user.getUid());
+        String curuser = user.getUid();
+        String sizefinal =  itemsize.getText().toString().concat(spinner.getSelectedItem().toString());
+        databaseReference = FirebaseDatabase.getInstance().getReference("items").child(curuser);
+        //String itemURL = storageReference.child("Images/").getDownloadUrl().toString();
+        DatabaseReference editref =  FirebaseDatabase.getInstance().getReference()
+                .child("items")
+                .child(curuser);
+
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
+        if (imgpath != null) {
+            final ProgressDialog progressDialog
+                    = new ProgressDialog(getView().getContext());
+            progressDialog.setTitle("Uploading...");
+            progressDialog.show();
+
+            StorageReference ref = storageReference
+                    .child("Images/" + "" + filestring);
+            ref.putFile(imgpath).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                    progressDialog.dismiss();
+                    Query editquery = editref
+                            .orderByChild("name").equalTo(val) ;
+                    editquery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot ds : snapshot.getChildren()){
+
+                                databaseReference = databaseReference.child(ds.getKey());
+
+                                if(!spinner.getSelectedItem().toString().matches("Choose mg/mL")) {
+
+
+                                    databaseReference.child("image").setValue(filestring);
+                                    databaseReference.child("name").setValue(itemname.getText().toString());
+                                    databaseReference.child("company").setValue(itemdesc.getText().toString());
+                                    databaseReference.child("price").setValue(itemprice.getText().toString());
+                                    databaseReference.child("image").setValue(imgname.getText().toString());
+                                    databaseReference.child("dprice").setValue(String.valueOf(db_dis_price));
+                                    databaseReference.child("discount").setValue(itemdiscount.getText().toString());
+                                    databaseReference.child("qty").setValue(itemqty.getText().toString());
+                                    databaseReference.child("size").setValue(sizefinal);
+
+                                    Toast.makeText(getView().getContext(), "Item Updated !!", Toast.LENGTH_SHORT).show();
+
+                                    FragmentHome fragmentHome = new FragmentHome();
+                                    FragmentManager manager = getFragmentManager();
+                                    manager.beginTransaction()
+
+                                            .replace(R.id.HomeActivity, fragmentHome, fragmentHome.getTag())
+                                            .commit();
+
+                                }
+                                else{
+                                    Toast.makeText(getView().getContext(), "Choose mg/mL !", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+
+                    Toast.makeText(getView().getContext(), "Item Update Failed !!", Toast.LENGTH_SHORT).show();
+
+                }
+            }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                    double progress = (100.0 * snapshot.getBytesTransferred() / snapshot
+                            .getTotalByteCount());
+                    progressDialog.setMessage("Item Updated " + (int) progress + "%");
+
+                }
+            });
+        }
+
+
+
+
+        String random = GenerateRandomString.randomString(19);
+
+
     }
 
     private void AddItem() {

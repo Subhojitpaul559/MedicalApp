@@ -17,8 +17,8 @@ public class OrderModel {
         this.amount = amount;
         this.umedID = umedID;
         this.ustatus = ustatus;
-       this.quantity = quantity;
-       this.UID = UID;
+        this.quantity = quantity;
+        this.UID = UID;
         this.address = address;
         this.name = name;
         this.phone = phone;

@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.example.smplmedicalapp.OrderAdapter;
 import com.example.smplmedicalapp.OrderModel;
 import com.example.smplmedicalapp.R;
-import com.example.smplmedicalapp.SearchAdapter;
 import com.example.smplmedicalapp.SearchModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -136,7 +136,8 @@ public class FragmentUserFilterOrder extends Fragment {
                                             Log.i("childval3:-- ", String.valueOf(snapshot3.getValue()));
 
                                             Log.i("joe styles", FirebaseAuth.getInstance().getCurrentUser().getUid());
-                                           if (FirebaseAuth.getInstance().getCurrentUser().getUid().equals(orderModel.getStoreId())) {
+                                           if (FirebaseAuth.getInstance().getCurrentUser()
+                                                   .getUid().equals(orderModel.getStoreId())  &&  !orderModel.getUstatus().matches("CART")) {
                                             Log.i("curuser", String.valueOf(user));
                                             String name = orderModel.getName();
                                             String mName = orderModel.getMedicineName();
@@ -145,7 +146,13 @@ public class FragmentUserFilterOrder extends Fragment {
                                             String phone = orderModel.getPhone();
                                             String tax = orderModel.getTax();
                                             String quantity = orderModel.getQuantity();
-                                            String total = String.valueOf(Float.parseFloat(amount) + Float.parseFloat(tax));
+
+
+
+                                               DecimalFormat df = new DecimalFormat();
+                                               df.setMaximumFractionDigits(2);
+                                              // System.out.println(df.format(decimalNumber));
+                                            String total = df.format(Float.parseFloat(amount) + Float.parseFloat(tax));
                                             String orderID = snapshot2.getKey();
                                             String storeId = orderModel.getStoreId();
                                             String umedID = orderModel.getUmedID();
@@ -192,8 +199,6 @@ public class FragmentUserFilterOrder extends Fragment {
                     });
 
                     Log.i("childval", String.valueOf(dataSnapshot.getValue()));
-
-
 
                     ulist.add(dataSnapshot.getKey());
 

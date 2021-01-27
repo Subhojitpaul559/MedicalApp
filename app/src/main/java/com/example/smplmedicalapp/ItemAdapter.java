@@ -21,34 +21,36 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.FirebaseRecyclerOptions.Builder;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 import static java.util.Objects.*;
 
-public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
+
+    private List<ItemData> list;
 
 
-
-    /**
-     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-     * {@link FirebaseRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    public ItemAdapter(@NonNull FirebaseRecyclerOptions<ItemData> options) {
-        super(options);
+    public ItemAdapter(List<ItemData> list) {
+        this.list = list;
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, int position,
-                                    @NonNull ItemData model) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        ItemData model = list.get(position);
         holder.name.setText(model.getName());
         holder.desc.setText(model.getCompany());
         holder.org_price.setText("₹"+model.getPrice());
@@ -66,11 +68,33 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
         holder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase.getInstance().getReference().child("items")
-                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child(getRef(position).getKey())
-                        .removeValue();
-                Toast.makeText( v.getContext(), "Deleted !", Toast.LENGTH_SHORT).show();
+
+
+                 DatabaseReference removeref =  FirebaseDatabase.getInstance().getReference()
+                         .child("items")
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                  Query removequery = removeref
+                        .orderByChild("name").equalTo(model.getName()) ;
+
+                         removequery.addListenerForSingleValueEvent(new ValueEventListener() {
+                             @Override
+                             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                 for(DataSnapshot ds : snapshot.getChildren()){
+
+                                        ds.getRef().removeValue();
+
+                                 }
+                             }
+
+                             @Override
+                             public void onCancelled(@NonNull DatabaseError error) {
+
+                             }
+                         });
+
+
+                Toast.makeText( v.getContext(), "Removed !", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -96,6 +120,12 @@ public class ItemAdapter extends FirebaseRecyclerAdapter<ItemData, ItemAdapter.V
             }
         });
     }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
