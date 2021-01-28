@@ -333,7 +333,8 @@ public class FragmentHome extends Fragment {
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.add_item_layout
+            View view = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.add_item_layout
                     , parent, false);
 
             return  new ViewHolder(view);
@@ -361,6 +362,21 @@ public class FragmentHome extends Fragment {
                 this.size = itemView.findViewById(R.id.item_size);
                 this.button = itemView.findViewById(R.id.btn_remove);
                 relativeLayout = itemView.findViewById(R.id.item_relativeLayout);
+            }
+
+            public void setItem(ItemData item){
+                name.setText(item.getName());
+                desc.setText(item.getCompany());
+                qty.setText(item.getQty());
+                discount.setText(item.getDiscount());
+                org_price.setText(item.getPrice());
+
+                float discount = Integer.parseInt(item.getDiscount());
+                float price = Integer.parseInt(item.getPrice());
+
+                int dprice = (int) ((price*(100-discount))/100);
+
+                discountPrice.setText(dprice);
             }
 
         }

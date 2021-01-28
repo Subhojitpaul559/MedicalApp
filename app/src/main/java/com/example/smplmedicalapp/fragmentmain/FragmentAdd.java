@@ -153,11 +153,7 @@ public class FragmentAdd extends Fragment {
         }
 
 
-
-
-
-
-         size_list = new String[3];
+        size_list = new String[3];
         size_list[0] = "Choose mg/mL";
         size_list[1] = "mL";
         size_list[2] = "mg";

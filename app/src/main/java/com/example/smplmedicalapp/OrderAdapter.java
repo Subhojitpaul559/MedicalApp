@@ -13,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.transition.Hold;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,9 +56,25 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
         float amount = Float.parseFloat(list.get(position).getAmount());
         float tax = Float.parseFloat(list.get(position).getTax());
         float total = amount + tax;
-        holder.changeOdr.setText(list.get(position).getUstatus());
+        holder.changeOdr.setText("Accept");
+        holder.cancelOdr.setText("Cancel");
         holder.total.setText("₹"+String.valueOf(total));
         holder.phone.setText("phone: "+list.get(position).getPhone());
+
+
+        if(currentItem.getUstatus().matches("CANCELLED")){
+
+            holder.cancelOdr.setEnabled(false);
+            holder.changeOdr.setEnabled(false);
+            holder.cancelOdr.setText("Cancelled");
+        }
+
+        if(currentItem.getUstatus().matches("ACCEPTED")){
+
+            //holder.cancelOdr.setEnabled(false);
+            holder.changeOdr.setEnabled(false);
+            holder.changeOdr.setText("Accepted");
+        }
         holder.changeOdr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +86,25 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
                 String UID = currentItem.getUID();
 
 
+                DatabaseReference qref = FirebaseDatabase.getInstance().getReference()
+                        .child("items").child(orderStoreID);
+                qref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot qsnapshot: snapshot.getChildren()){
+                            ItemData qmodel = qsnapshot.getValue(ItemData.class);
+
+                            Log.i("chng qty vn:", qmodel.getQty());
+
+                            qmodel.setQty( String.valueOf(Integer.parseInt(qmodel.getQty())  -  Integer.parseInt(currentItem.getQuantity())));
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
                 DatabaseReference uidref = FirebaseDatabase
                         .getInstance()
@@ -76,13 +112,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
                         .child(UID)
                         .child(uorderID);
 
+                //DatabaseReference statusref = uidref.child(umedID);
+
+
 
 
                 uidref.child(umedID).child("ustatus").setValue("ACCEPTED");
+                holder.changeOdr.setEnabled(false);
 
-/*
+    /*
 
-String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
+        String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                 DatabaseReference vendorOderRef = FirebaseDatabase.getInstance()
                         .getReferenceFromUrl(url)
                         .child("orders");
@@ -143,6 +183,93 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
         });
         //holder.quantity.setText(list.get(position).getQuantity());
 
+        holder.cancelOdr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String uorderID = currentItem.getOrderID();
+
+
+                String umedID = currentItem.getUmedID();
+                String orderStoreID = currentItem.getStoreId();
+                String UID = currentItem.getUID();
+
+
+
+                DatabaseReference uidref = FirebaseDatabase
+                        .getInstance()
+                        .getReferenceFromUrl("https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/userorders")
+                        .child(UID)
+                        .child(uorderID);
+
+
+
+                uidref.child(umedID).child("ustatus").setValue("CANCELLED");
+                holder.cancelOdr.setEnabled(false);
+                holder.changeOdr.setEnabled(false);
+
+/*
+
+String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
+                DatabaseReference vendorOderRef = FirebaseDatabase.getInstance()
+                        .getReferenceFromUrl(url)
+                        .child("orders");
+                vendorOderRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            DatabaseReference voderRef1 = FirebaseDatabase.getInstance()
+                                    .getReferenceFromUrl(url).child("orders").child(dataSnapshot.getKey());
+
+                            voderRef1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(DataSnapshot snapshot2: snapshot.getChildren()){
+
+                                        Log.i("testing which ID", snapshot2.getKey());
+
+                                        DatabaseReference voderRef2 = voderRef1.child(snapshot2.getKey());
+                                        DatabaseReference voderRefcust = voderRef1.child(snapshot2.child("customer").getKey());
+
+                                        VendorOrderModel vendorOrderModel = snapshot2.getValue(VendorOrderModel.class);
+
+                                        VendorOrderModel vendorOrderModelcust = snapshot2.child("customer").getValue(VendorOrderModel.class);
+                                        Log.i("testing which key: ", snapshot2.getValue().toString());
+                                        Log.i("testing which key 2: ", vendorOrderModel.getStoreId());
+
+
+                                        if(vendorOrderModel.getStoreId().equals(orderStoreID) &&
+                                                vendorOrderModel.getMedicineId().equals(umedID)  &&
+                                        vendorOrderModelcust.getUid().equals(UID)){
+                                            vendorOrderModel.setStatus("ACCEPTED");
+                                        }
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+*/
+
+
+                holder.cancelOdr.setText("Cancelled");
+                holder.changeOdr.setText("Accept");
+
+            }
+        });
+
     }
 
     @Override
@@ -154,7 +281,7 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
 
             TextView medicineName, address, name,phone, amount, tax,quantity, total, orderid;
             RelativeLayout relativeLayout;
-            Button changeOdr;
+            Button changeOdr, cancelOdr;
 
             public orderViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -169,6 +296,7 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                 total = itemView.findViewById(R.id.item_price);
                 orderid = itemView.findViewById(R.id.odrid);
                 changeOdr = itemView.findViewById(R.id.changeodr);
+                cancelOdr = itemView.findViewById(R.id.cancelodr);
                 relativeLayout = itemView.findViewById(R.id.order_relativeLayout);
 
             }

@@ -1,5 +1,7 @@
 package com.example.smplmedicalapp;
 
+import java.util.Objects;
+
 public class ItemData {
 
     private  String name, company, image, price, discount, qty, size  ;
@@ -75,4 +77,22 @@ public class ItemData {
         this.size = size;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemData itemData = (ItemData) o;
+        return Objects.equals(name, itemData.name) &&
+                Objects.equals(company, itemData.company) &&
+                Objects.equals(image, itemData.image) &&
+                Objects.equals(price, itemData.price) &&
+                Objects.equals(discount, itemData.discount) &&
+                Objects.equals(qty, itemData.qty) &&
+                Objects.equals(size, itemData.size);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, company, image, price, discount, qty, size);
+    }
 }

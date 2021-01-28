@@ -99,7 +99,8 @@ public class FragmentResetPass extends Fragment {
                 {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-                   DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getUid());
+                   DatabaseReference databaseReference = FirebaseDatabase
+                           .getInstance().getReference("users").child(mAuth.getUid());
 
 
                     databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
