@@ -58,7 +58,7 @@
                         <Button
                             android:id="@+id/changeodr"
                             android:layout_margin="5dp"
-                            android:layout_width="120dp"
+                            android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:text="Waiting"
                             android:textSize="10dp"
@@ -66,7 +66,7 @@
                         <Button
                             android:layout_margin="5dp"
                             android:id="@+id/cancelodr"
-                            android:layout_width="120dp"
+                            android:layout_width="150dp"
                             android:layout_height="40dp"
                             android:textSize="10dp"
                             android:text="Waiting"

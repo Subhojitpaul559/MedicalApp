@@ -81,23 +81,64 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
                 String uorderID = currentItem.getOrderID();
 
 
+
                 String umedID = currentItem.getUmedID();
                 String orderStoreID = currentItem.getStoreId();
                 String UID = currentItem.getUID();
 
 
-                DatabaseReference qref = FirebaseDatabase.getInstance().getReference()
-                        .child("items").child(orderStoreID);
-                qref.addListenerForSingleValueEvent(new ValueEventListener() {
+                //inventory update
+
+                DatabaseReference qref1 = FirebaseDatabase
+                        .getInstance()
+                        .getReference()
+                        .child("items")
+                        .child(orderStoreID);
+
+              //  Log.i("quantity vn 1", qref1.child(umedID).child("qty").toString());
+
+
+                qref1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot qsnapshot: snapshot.getChildren()){
-                            ItemData qmodel = qsnapshot.getValue(ItemData.class);
+                        for(DataSnapshot shopsnapshot: snapshot.getChildren()){
 
-                            Log.i("chng qty vn:", qmodel.getQty());
+                            DatabaseReference shopmedref = qref1.child(shopsnapshot.getKey());
 
-                            qmodel.setQty( String.valueOf(Integer.parseInt(qmodel.getQty())  -  Integer.parseInt(currentItem.getQuantity())));
+
+
+                            shopmedref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    Log.i("medkeys", snapshot.getKey());
+
+                                    if (snapshot.getKey().matches(umedID)){
+                                        Log.i("quantity vn 3", snapshot.child("qty").getValue().toString());
+                                        ItemData medData = snapshot.getValue(ItemData.class);
+                                        int qty = Integer.parseInt(snapshot.child("qty").getValue().toString()) ;
+                                        int custqty = Integer.parseInt(currentItem.getQuantity());
+
+
+                                        qref1.child(umedID).child("qty").setValue(String.valueOf(qty - custqty));
+                                        medData.setQty(String.valueOf(qty - custqty));
+
+                                        Log.i("quantity vn upd", medData.getQty());
+
+                                    }
+
+                                    //    Log.i("quantity vn", String.valueOf(snapshot.child("qty")));
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
                         }
+
                     }
 
                     @Override
@@ -105,6 +146,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
 
                     }
                 });
+
 
                 DatabaseReference uidref = FirebaseDatabase
                         .getInstance()
@@ -188,22 +230,124 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
             public void onClick(View v) {
                 String uorderID = currentItem.getOrderID();
 
+                String curstatus;
+
 
                 String umedID = currentItem.getUmedID();
                 String orderStoreID = currentItem.getStoreId();
                 String UID = currentItem.getUID();
 
 
-
+                //check status
                 DatabaseReference uidref = FirebaseDatabase
                         .getInstance()
                         .getReferenceFromUrl("https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/userorders")
                         .child(UID)
                         .child(uorderID);
 
+                uidref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot dataSnapshot: snapshot.getChildren()){
+                            DatabaseReference umedref = uidref.child(dataSnapshot.getKey());
 
 
-                uidref.child(umedID).child("ustatus").setValue("CANCELLED");
+                            umedref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    OrderModel statuscheck = snapshot.getValue(OrderModel.class);
+                                    //curstatus = statuscheck.getUstatus();
+
+
+                                    if(statuscheck.getUstatus().matches("ACCEPTED")){
+
+                                        uidref.child(umedID).child("ustatus").setValue("CANCELLED");
+
+                                        //inventory update
+
+                                        DatabaseReference qref1 = FirebaseDatabase
+                                                .getInstance()
+                                                .getReference()
+                                                .child("items")
+                                                .child(orderStoreID);
+
+                                        //  Log.i("quantity vn 1", qref1.child(umedID).child("qty").toString());
+
+
+                                        qref1.addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                for(DataSnapshot shopsnapshot: snapshot.getChildren()){
+
+                                                    DatabaseReference shopmedref = qref1.child(shopsnapshot.getKey());
+
+                                                    shopmedref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                                            Log.i("medkeys", snapshot.getKey());
+
+                                                            if (snapshot.getKey().matches(umedID)){
+                                                                Log.i("quantity vn 3", snapshot.child("qty").getValue().toString());
+                                                                ItemData medData = snapshot.getValue(ItemData.class);
+
+                                                                int qty = Integer.parseInt(snapshot.child("qty").getValue().toString()) ;
+                                                                int custqty = Integer.parseInt(currentItem.getQuantity());
+
+
+                                                                qref1.child(umedID).child("qty").setValue(String.valueOf(qty + custqty));
+                                                                medData.setQty(String.valueOf(qty + custqty));
+
+                                                                Log.i("quantity vn upd", medData.getQty());
+
+                                                            }
+
+                                                            //    Log.i("quantity vn", String.valueOf(snapshot.child("qty")));
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+
+
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+
+                                    }else{
+                                        uidref.child(umedID).child("ustatus").setValue("CANCELLED");
+                                    }
+
+
+                                    Log.i("ustatus cur", statuscheck.getUstatus());
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                //Log.i("ustatus: ", uidref.child(umedID).child("ustatus").toString());
+
                 holder.cancelOdr.setEnabled(false);
                 holder.changeOdr.setEnabled(false);
 
