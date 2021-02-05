@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.smplmedicalapp.MainActivity;
 import com.example.smplmedicalapp.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -84,6 +85,8 @@ public class FragmentResetPass extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_reset_pass, container, false);
+
+        ((MainActivity)getActivity()).checkOrder();
         curpass = view.findViewById(R.id.curpass);
         pass1 = view.findViewById(R.id.pass1);
         pass2 = view.findViewById(R.id.pass2);

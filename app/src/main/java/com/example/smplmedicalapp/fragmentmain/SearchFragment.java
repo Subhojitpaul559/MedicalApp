@@ -23,6 +23,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smplmedicalapp.MainActivity;
 import com.example.smplmedicalapp.R;
 import com.example.smplmedicalapp.SearchModel;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -108,6 +109,8 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        ((MainActivity)getActivity()).checkOrder();
         textView = view.findViewById(R.id.tv1);
         String val = getArguments().getString("key");
         Log.i(TAG, "searchactivity: " + val);

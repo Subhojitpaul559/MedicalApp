@@ -15,12 +15,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.smplmedicalapp.MainActivity;
 import com.example.smplmedicalapp.OrderAdapter;
 import com.example.smplmedicalapp.OrderModel;
 import com.example.smplmedicalapp.R;
 import com.example.smplmedicalapp.SearchModel;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +33,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -50,6 +57,7 @@ public class FragmentUserFilterOrder extends Fragment {
 
     RecyclerView recyclerView;
     private OrderAdapter adapter;
+    public TextView badge;
     private List<OrderModel> orderlist=new ArrayList<>();
 
     // TODO: Rename parameter arguments, choose names that match
@@ -96,11 +104,19 @@ public class FragmentUserFilterOrder extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_user_filter_order, container, false);
+
+        View view2 = getActivity().findViewById(R.id.HomeActivity);
+       // ((MainActivity)getActivity()).checkOrder();
+        badge = view2.findViewById(R.id.notifications_badge);
+        badge.setVisibility(View.INVISIBLE);
 
        // listView = view.findViewById(R.id.userlistview);
 
         //recyclerView = view.findViewById(R.id.allorder_rclv);
+        //badge
+
 
         List<String> ulist = new ArrayList<String>();
 

@@ -14,6 +14,7 @@
        android:layout_height="55dp"
        android:layout_gravity="bottom"
        android:id="@+id/navigation"
+
        app:menu="@menu/select_icon">
 
    </com.google.android.material.bottomnavigation.BottomNavigationView>

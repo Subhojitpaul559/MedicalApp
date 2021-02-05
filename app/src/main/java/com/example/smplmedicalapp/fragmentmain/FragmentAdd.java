@@ -127,6 +127,7 @@ public class FragmentAdd extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add, container, false);
 
+        ((MainActivity)getActivity()).checkOrder();
         Toast.makeText(getContext(), "Choose Image first !", Toast.LENGTH_SHORT).show();
 
         addbtn = view.findViewById(R.id.btn_additem);

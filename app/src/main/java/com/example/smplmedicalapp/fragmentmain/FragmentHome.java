@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smplmedicalapp.ItemData;
+import com.example.smplmedicalapp.MainActivity;
 import com.example.smplmedicalapp.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,6 +111,8 @@ public class FragmentHome extends Fragment {
         // Inflate the layout for this fragment
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        ((MainActivity)getActivity()).checkOrder();
        // progressBar = view.findViewById(R.id.progressbar);
         //progressBar.setVisibility(View.VISIBLE);
         //pgsBar.setVisibility(view.GONE);

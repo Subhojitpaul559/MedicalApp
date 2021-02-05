@@ -69,6 +69,8 @@ public class Profile_Fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_, container, false);
 
+        ((MainActivity)getActivity()).checkOrder();
+
          mAuth = FirebaseAuth.getInstance();
         Person = view.findViewById(R.id.Name);
         Logout_txt = view.findViewById(R.id.logout);
