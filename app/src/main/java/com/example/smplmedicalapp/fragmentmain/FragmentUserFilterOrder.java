@@ -824,6 +824,7 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                                         e.printStackTrace();
                                     }
                                     Log.i("Order Response ", response.toString());
+                                   // Toast.makeText(getContext(), "BohonAPI called", Toast.LENGTH_SHORT).show();
 
                                 }
                             }, new com.android.volley.Response.ErrorListener() {
