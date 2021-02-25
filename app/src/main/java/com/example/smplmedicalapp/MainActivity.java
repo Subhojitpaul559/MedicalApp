@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smplmedicalapp.fragmentmain.FragmentAdd;
 import com.example.smplmedicalapp.fragmentmain.FragmentHome;
@@ -197,6 +198,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
             case R.id.order:
                 fragment = new FragmentUserFilterOrder();
+                break;
+            case R.id.deliery:
+                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
         }
         return newFragment(fragment);

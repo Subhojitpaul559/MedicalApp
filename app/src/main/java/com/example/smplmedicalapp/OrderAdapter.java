@@ -13,17 +13,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.smplmedicalapp.fragmentmain.FragmentUserFilterOrder;
 import com.google.android.material.transition.Hold;
+
+import com.android.volley.RequestQueue;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.ContentValues.TAG;
+import static java.security.AccessController.getContext;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHolder> {
     private List<OrderModel> list;
@@ -56,8 +70,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
         float amount = Float.parseFloat(list.get(position).getAmount());
         float tax = Float.parseFloat(list.get(position).getTax());
         float total = amount + tax;
+
         holder.changeOdr.setText("Accept");
         holder.cancelOdr.setText("Cancel");
+
         holder.total.setText("₹"+String.valueOf(total));
         holder.phone.setText("phone: "+list.get(position).getPhone());
 
@@ -66,15 +82,23 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
 
             holder.cancelOdr.setEnabled(false);
             holder.changeOdr.setEnabled(false);
-            holder.cancelOdr.setText("Cancelled");
+            holder.cancelOdr.setText(currentItem.getUstatus());
         }
 
-        if(currentItem.getUstatus().matches("ACCEPTED")){
+        else if(currentItem.getUstatus().matches("ACCEPTED")){
 
             //holder.cancelOdr.setEnabled(false);
             holder.changeOdr.setEnabled(false);
-            holder.changeOdr.setText("Accepted");
+            holder.changeOdr.setText(currentItem.getUstatus());
         }
+        else{
+
+            holder.cancelOdr.setEnabled(true);
+            holder.changeOdr.setEnabled(true);
+
+        }
+
+
         holder.changeOdr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +109,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
                 String umedID = currentItem.getUmedID();
                 String orderStoreID = currentItem.getStoreId();
                 String UID = currentItem.getUID();
+
+
+
+               // bohonPlaceOrder(orderStoreID, UID, currentItem.getAddress());
 
 
                 //inventory update
@@ -217,7 +245,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
                 });
 
 */
-
 
                 holder.changeOdr.setText("Accepted");
 
@@ -415,6 +442,214 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
         });
 
     }
+
+
+   /* private void bohonPlaceOrder(String storeID, String userID, String cAddress) {
+
+        final String[] pLoc = new String[1];
+        final String[] pPhone = new String[1];
+        final String[] pName = new String[1];
+        final String[] dLoc = new String[1];
+        final String[] dPhone = new String[1];
+        final String[] dName = new String[1];
+
+
+        JSONObject orderObject = new JSONObject();
+        JSONObject drop = new JSONObject();
+        JSONObject pickup = new JSONObject();
+
+
+        DatabaseReference customerReference = FirebaseDatabase.getInstance()
+                .getReference().child("customer");
+
+        DatabaseReference storeReference = FirebaseDatabase.getInstance().getReference()
+                .child("medicineProfile");
+
+
+        storeReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot store: snapshot.getChildren()){
+                    if(store.getKey().matches(storeID)){
+
+                        pLoc[0] = (String) store.child("address").getValue();
+                        pPhone[0] = (String) store.child("phone").getValue();
+                        pName[0] = (String) store.child("shopName").getValue();
+
+
+
+                        try {
+                            pickup.put("location", pLoc[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            pickup.put("vendor_name", pName[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            pickup.put("contact_no", pPhone[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        // Log.i(TAG, "bohonPlaceOrder: "+ pickup);
+
+                        try {
+                            orderObject.put("pickup", pickup);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.i(TAG, "bohonPlaceOrder: "+ orderObject);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        customerReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot store: snapshot.getChildren()){
+                    if(store.getKey().matches(userID)){
+
+                        dLoc[0] = cAddress;
+
+
+                        dPhone[0] = (String) store.child("phone").getValue();
+                        dName[0] = (String) store.child("name").getValue();
+
+
+
+                        try {
+                            drop.put("location", dLoc[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            drop.put("vendor_name", dName[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            drop.put("contact_no", dPhone[0]);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        // Log.i(TAG, "bohonPlaceOrder: "+ drop);
+
+                        try {
+                            orderObject.put("drop", drop);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        Log.i(TAG, "bohonPlaceOrder : "+ orderObject);
+
+
+                    }
+                }
+
+                Log.i(TAG, "bohonPlaceOrder final 001: "+ orderObject);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        Log.i(TAG, "bohonPlaceOrder final  2: "+ orderObject);
+
+        // Log.i(TAG, "bohonPlaceOrder final: "+orderObject);
+      *//*  Log.i(TAG, "bohonPlaceOrder: "+ pLoc[0]);
+        Log.i(TAG, "bohonPlaceOrder: "+ dLoc[0]);
+        Log.i(TAG, "bohonPlaceOrder: "+ pPhone[0]);
+        Log.i(TAG, "bohonPlaceOrder: "+ dPhone[0]);
+        Log.i(TAG, "bohonPlaceOrder: "+ pName[0]);
+        Log.i(TAG, "bohonPlaceOrder: "+ dName[0]);*//*
+
+
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+
+
+
+        final String url = "http://bohon.herokuapp.com/api/order/generate/";
+
+        // prepare the Request
+
+        StringRequest postRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Response", response);
+
+                        //registerUser( email, password,fullname,  phone,username);
+
+                        try {
+
+
+                            JSONObject obj = new JSONObject(response);
+
+                            String b_id = obj.getString("id");
+                            Log.i("password check", b_id);
+
+                            Log.d("My App", obj.toString());
+
+
+
+                        } catch (Throwable t) {
+                            Log.e("My App", "Could not parse malformed JSON: \"" + response + "\"");
+                        }
+
+
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+
+                        //Toast.makeText(RegisterActivity.this, "Choose a better password", Toast.LENGTH_SHORT).show();
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams()
+            {
+                Map<String, String> params = new HashMap<>();
+                params.put("username", username);
+                params.put("first_name", fullname);
+                params.put("last_name", "");
+                params.put("email", email);
+                params.put("password", password);
+                params.put("password2", password2);
+                params.put("user_type", u_type);
+
+                Log.i("params", params.toString());
+                return params;
+            }
+        };
+        queue.add(postRequest);
+
+        Log.i("call", "bohonRegister ");
+
+
+    }*/
+
+
 
     @Override
     public int getItemCount() {
