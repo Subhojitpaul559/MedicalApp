@@ -16,10 +16,7 @@
         android:title="orders"
         android:icon="@drawable/ic_baseline_shopping_bag_24"/>
 
-    <item
-        android:id="@+id/deliery"
-        android:title="delivery"
-        android:icon="@drawable/ic_baseline_local_shipping_24"/>
+
 
 
     <item

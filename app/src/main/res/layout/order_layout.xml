@@ -47,12 +47,13 @@
                         <TextView
 
                             android:id="@+id/item_name"
-                            android:layout_width="140dp"
+                            android:layout_width="100dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="14dp"
                             android:text="@string/item_name"
                             android:textColor="@color/black"
                             android:textSize="18sp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="14dp"
                             android:layout_weight="1"/>
 
                         <Button
@@ -61,14 +62,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:text="Waiting"
-                            android:textSize="10dp"
+                            android:textSize="8dp"
                             android:layout_weight="1"/>
                         <Button
                             android:layout_margin="5dp"
                             android:id="@+id/cancelodr"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:textSize="10dp"
+                            android:textSize="8dp"
                             android:text="Waiting"
                             android:layout_weight="1"/>
 
