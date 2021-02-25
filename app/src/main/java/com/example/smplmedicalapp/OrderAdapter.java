@@ -1,43 +1,23 @@
 package com.example.smplmedicalapp;
 
-import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.smplmedicalapp.fragmentmain.FragmentUserFilterOrder;
-import com.google.android.material.transition.Hold;
-
-import com.android.volley.RequestQueue;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static android.content.ContentValues.TAG;
-import static java.security.AccessController.getContext;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHolder> {
     private List<OrderModel> list;
@@ -77,6 +57,13 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.orderViewHol
         holder.total.setText("₹"+String.valueOf(total));
         holder.phone.setText("phone: "+list.get(position).getPhone());
 
+
+        if(currentItem.getUstatus().matches("ORDERED")){
+
+            holder.cancelOdr.setEnabled(true);
+            holder.changeOdr.setEnabled(true);
+            //holder.cancelOdr.setText(currentItem.getUstatus());
+        }
 
         if(currentItem.getUstatus().matches("CANCELLED")){
 
