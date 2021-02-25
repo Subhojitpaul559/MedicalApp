@@ -199,9 +199,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.order:
                 fragment = new FragmentUserFilterOrder();
                 break;
-            case R.id.deliery:
-                Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
-                break;
+
         }
         return newFragment(fragment);
     }

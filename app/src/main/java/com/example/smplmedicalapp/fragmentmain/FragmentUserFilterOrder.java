@@ -843,10 +843,7 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                         public Map<String, String> getHeaders() throws AuthFailureError {
 
                             Map<String, String> headers = new HashMap<>();
-                            String auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6" +
-                                    "InZlbmRvcm5hbWUwMDEiLCJpYXQiOjE2MTMxNDUyMTYsImV4cCI6MTYxNTczNzI" +
-                                    "xNiwianRpIjoiZjdhYzQ3ZDYtMWViNC00Zjc4LWI2OWUtZDhiMzY4YTgwMDgwIiwidXNlcl" +
-                                    "9pZCI6M30.Kc3IAXxDF-dS0s8jueuPhQ8Gv6rwt1xYI4aXEAglW4o";
+                            String auth = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InZlbmRvcm5hbWUwMDEiLCJpYXQiOjE2MTMxNDUyMTYsImV4cCI6MTYxNTczNzIxNiwianRpIjoiZjdhYzQ3ZDYtMWViNC00Zjc4LWI2OWUtZDhiMzY4YTgwMDgwIiwidXNlcl9pZCI6M30.Kc3IAXxDF-dS0s8jueuPhQ8Gv6rwt1xYI4aXEAglW4o";
                             headers.put("Authorization", "Bearer "+auth);
                             headers.put("Accept", "*/*");
                             headers.put("Accept-Encoding", "gzip, deflate, br");
@@ -861,12 +858,12 @@ String url = "https://smplmedicalapp-408ea-default-rtdb.firebaseio.com/";
                     jsonObjectRequest.setRetryPolicy(new RetryPolicy() {
                         @Override
                         public int getCurrentTimeout() {
-                            return 20000;
+                            return 8000;
                         }
 
                         @Override
                         public int getCurrentRetryCount() {
-                            return 20000;
+                            return 8000;
                         }
 
                         @Override
